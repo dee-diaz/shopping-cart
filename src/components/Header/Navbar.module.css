@@ -1,0 +1,62 @@
+.navbar {
+  background-color: var(--clr-bg-navbar);
+  padding: 0.5rem 0;
+}
+
+.container,
+.actions,
+.iconBtn {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  justify-content: space-between;
+}
+
+.logo {
+  width: 8.25rem;
+}
+
+.actions {
+  gap: 0.5rem;
+}
+
+.iconBtn {
+  background-color: transparent;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: var(--clr-text-primary);
+}
+
+@media (min-width: 992px) {
+  .navbar {
+    padding: 0.75rem;
+  }
+
+  .logo {
+    width: 10.5rem;
+  }
+
+  .actions {
+    gap: 2rem;
+  }
+
+  .iconBtn:hover {
+    .icon {
+      fill: var(--clr-accent-pink);
+    }
+  }
+
+  .icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    transition: fill 0.3s ease;
+  }
+}
