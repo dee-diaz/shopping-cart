@@ -5,20 +5,24 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <div className={`container ${styles.container}`}>
-        <a href="/">
+        <Link to="/" aria-label="Go to homepage">
           <img
             className={styles.logo}
             src="/images/logo.png"
             alt="Grain & Noise logo"
           />
-        </a>
+        </Link>
 
         <div className={styles.actions}>
-          <Link to="wishlist" className={styles.iconBtn}>
+          <Link
+            to="wishlist"
+            aria-label="Go to wishlist"
+            className={styles.iconBtn}
+          >
             <svg
               className={styles.icon}
               viewBox="0 0 24 24"
-              aria-label="Wishlist"
+              aria-hidden="true"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -26,11 +30,11 @@ export default function Navbar() {
             </svg>
           </Link>
 
-          <button className={styles.iconBtn}>
+          <button aria-label="Search" className={styles.iconBtn}>
             <svg
               className={styles.icon}
               viewBox="0 0 24 24"
-              aria-label="Search"
+              aria-hidden="true"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -38,11 +42,11 @@ export default function Navbar() {
             </svg>
           </button>
 
-          <Link to="cart" className={styles.iconBtn}>
+          <Link to="cart" aria-label="Go to cart" className={styles.iconBtn}>
             <svg
               className={styles.icon}
               viewBox="0 0 24 24"
-              aria-label="Wishlist"
+              aria-hidden="true"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
