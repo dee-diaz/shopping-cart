@@ -98,6 +98,14 @@ p {
   text-wrap: pretty;
 }
 
+button,
+ul,
+ol {
+  padding: 0;
+  margin: 0;
+  color: var(--clr-text-primary);
+}
+
 p,
 h1,
 h2,
@@ -107,6 +115,7 @@ h5,
 h6 {
   overflow-wrap: break-word;
   margin: 0;
+  color: var(--clr-text-primary);
 }
 
 img,
@@ -127,6 +136,14 @@ textarea,
 select {
   font-family: inherit;
   font-size: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-transform: uppercase;
+  color: var(--clr-text-primary);
 }
 
 .container {
