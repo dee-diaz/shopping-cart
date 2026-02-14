@@ -1,7 +1,7 @@
 .dropdown {
   position: absolute;
-  right: 0;
-  top: 0.5rem;
+  right: 1rem;
+  top: 3rem;
   display: grid;
   gap: 0.5rem;
   justify-items: end;
@@ -45,8 +45,7 @@
 
 .label {
   color: var(--clr-text-secondary);
-  margin-bottom: 0.75rem;
-  text-align: right;
+  margin-bottom: 1.25rem;
 }
 
 .list {
@@ -62,11 +61,23 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  transition: color 200ms ease;
 
   svg {
     fill: var(--clr-text-primary);
     width: 1rem;
     height: 1rem;
     transform: translateY(-3px);
+  }
+}
+
+@media (min-width: 992px) {
+  .dropdown {
+    top: 0.5rem;
+    right: 0;
+  }
+
+  .option:hover {
+    color: var(--clr-text-secondary);
   }
 }

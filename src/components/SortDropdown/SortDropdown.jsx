@@ -20,17 +20,22 @@ export default function SortDropdown() {
 
   useEffect(() => {
     function handleClickOutside(e) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      if (
+        (e.type === 'keydown' && e.key === 'Escape') ||
+        (dropdownRef.current && !dropdownRef.current.contains(e.target))
+      ) {
         setIsOpen(false);
       }
     }
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleClickOutside);
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleClickOutside);
     };
   }, [isOpen]);
 
