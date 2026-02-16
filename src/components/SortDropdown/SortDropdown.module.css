@@ -1,7 +1,7 @@
 .dropdown {
   position: absolute;
   right: 1rem;
-  top: 3rem;
+  top: 3.3rem;
   display: grid;
   gap: 0.5rem;
   justify-items: end;
