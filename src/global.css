@@ -6,6 +6,8 @@
   --clr-accent-pink: hsla(300, 92%, 63%, 1);
   --clr-bg-primary: hsla(0, 0%, 95%, 1);
   --clr-bg-navbar: hsla(0, 0%, 100%, 1);
+  --clr-bg-btn-primary: hsla(0, 0%, 10%, 1);
+  --clr-text-inversed: hsla(0, 0%, 95%, 1);
 }
 
 @font-face {
