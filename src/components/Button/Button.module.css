@@ -4,8 +4,20 @@
   justify-content: center;
   background: var(--clr-bg-btn-primary);
   color: var(--clr-text-inversed);
-  padding: 0.75rem 1.5rem;
+  padding: 0.875rem 1.5rem;
   border-radius: 0.25rem;
   text-transform: none;
   font-size: 1.125rem;
+
+  &:disabled {
+    pointer-events: none;
+    background-color: var(--clr-bg-btn-disabled);
+    color: var(--clr-text-disabled);
+  }
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: var(--clr-text-inversed);
 }
