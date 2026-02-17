@@ -1,5 +1,5 @@
 import styles from './FilterSidebar.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '../Button/Button';
 
 const isMobile = window.innerWidth < 992;
@@ -7,32 +7,40 @@ const isMobile = window.innerWidth < 992;
 function FilterSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const [priceRange, setPriceRange] = useState({
+    min: undefined,
+    max: undefined,
+  });
 
   function handleGenreChange(e) {
-    let newArr;
+    const { value, checked } = e.target;
 
-    if (selectedGenres.includes(e.target.value) && !e.target.checked) {
-      newArr = selectedGenres.filter((genre) => genre !== e.target.value);
+    if (checked) {
+      setSelectedGenres((prev) => [...prev, value]);
     } else {
-      newArr = [...selectedGenres, e.target.value];
+      setSelectedGenres((prev) => prev.filter((g) => g !== value));
     }
+  }
 
-    setSelectedGenres(newArr);
+  function handlePriceFilterChange(min, max) {
+    setPriceRange({ min, max });
+    setIsOpen(false);
   }
 
   return (
     <>
-      {isMobile && !isOpen && <FilterIcon onClick={() => setIsOpen(true)} />}
-      {(isMobile ? isOpen : true) && (
-        <div className={styles.filterSidebar}>
-          {isMobile && <ModalCloseButton onClick={() => setIsOpen(false)} />}
-          <GenreFilter
-            selectedGenres={selectedGenres}
-            onChange={handleGenreChange}
-          />
-          <PriceFilter />
-        </div>
-      )}
+      <FilterIcon onClick={() => setIsOpen(true)} />
+      <div className={`${styles.filterSidebar} ${isOpen ? styles.open : ''}`}>
+        <ModalCloseButton onClick={() => setIsOpen(false)} />
+        <GenreFilter
+          selectedGenres={selectedGenres}
+          onChange={handleGenreChange}
+        />
+        <PriceFilter
+          appliedValue={priceRange}
+          onApply={handlePriceFilterChange}
+        />
+      </div>
     </>
   );
 }
@@ -71,9 +79,19 @@ function GenreFilter({ selectedGenres, onChange }) {
   );
 }
 
-function PriceFilter() {
-  const [minPrice, setMinPrice] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(null);
+function PriceFilter({ appliedValue, onApply }) {
+  const [draftMin, setDraftMin] = useState(appliedValue.min ?? '');
+  const [draftMax, setDraftMax] = useState(appliedValue.max ?? '');
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setDraftMin(appliedValue.min ?? '');
+    setDraftMax(appliedValue.max ?? '');
+  }, [appliedValue]);
+
+  function handleApply() {
+    onApply(draftMin, draftMax);
+  }
 
   return (
     <div className={styles.priceFilter}>
@@ -83,15 +101,17 @@ function PriceFilter() {
         <input
           type="number"
           placeholder="min"
-          value={minPrice ? minPrice : ''}
-          onChange={(e) => setMinPrice(e.target.value)}
+          value={draftMin}
+          onChange={(e) => setDraftMin(e.target.value)}
         />
         <input
           type="number"
           placeholder="max"
-          value={maxPrice ? maxPrice : ''}
-          onChange={(e) => setMaxPrice(e.target.value)}
+          value={draftMax}
+          onChange={(e) => setDraftMax(e.target.value)}
         />
+
+        <Button label="Apply" size="sm" onClick={handleApply} />
       </div>
     </div>
   );

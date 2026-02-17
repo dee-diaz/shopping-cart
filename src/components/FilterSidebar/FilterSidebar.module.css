@@ -6,6 +6,16 @@
   gap: 2.5rem;
   padding: 1.25rem 1rem 0 1rem;
   background-color: var(--clr-bg-primary);
+  transform: translateX(-100%);
+  opacity: 0;
+  transition:
+    transform 0.3s var(--ease-out),
+    opacity 0.2s var(--ease-out);
+
+  &.open {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .genreFilter {
@@ -69,6 +79,8 @@
 /* Desktop */
 @media (min-width: 992px) {
   .filterSidebar {
+    transform: translateX(0);
+    opacity: 1;
     min-height: 100%;
     position: initial;
     padding: 0;
@@ -81,9 +93,8 @@
     margin-top: initial;
   }
 
-  .toggleBtn {
+  .toggleBtn,
+  .closeBtn {
     display: none;
   }
 }
-
-
