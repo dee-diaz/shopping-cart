@@ -2,8 +2,6 @@ import styles from './FilterSidebar.module.css';
 import { useState, useEffect } from 'react';
 import Button from '../Button/Button';
 
-const isMobile = window.innerWidth < 992;
-
 function FilterSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
