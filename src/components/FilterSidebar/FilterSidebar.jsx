@@ -31,9 +31,6 @@ function FilterSidebar() {
             onChange={handleGenreChange}
           />
           <PriceFilter />
-          {isMobile && (
-            <Button label="Apply filters" onClick={() => setIsOpen(false)} />
-          )}
         </div>
       )}
     </>
