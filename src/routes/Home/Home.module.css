@@ -14,4 +14,9 @@
     font-size: 2rem;
     margin-block: 2.5rem;
   }
+
+  .wrapper {
+    display: flex;
+    gap: 4rem;
+  }
 }
