@@ -7,7 +7,9 @@
   --clr-bg-primary: hsla(0, 0%, 95%, 1);
   --clr-bg-navbar: hsla(0, 0%, 100%, 1);
   --clr-bg-btn-primary: hsla(0, 0%, 10%, 1);
+  --clr-bg-btn-disabled: hsla(0, 0%, 10%, 0.6);
   --clr-text-inversed: hsla(0, 0%, 95%, 1);
+  --clr-text-disabled: hsla(0, 0%, 80%, 1);
 }
 
 @font-face {
