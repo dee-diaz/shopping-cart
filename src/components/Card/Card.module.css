@@ -1,0 +1,51 @@
+.card {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.coverImage {
+  height: 20rem;
+  object-fit: cover;
+}
+
+.albumInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.albumDetails {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 1.125rem;
+
+  h3 {
+    font-weight: 600;
+  }
+
+  p {
+    color: var(--clr-text-secondary);
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.325rem;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.divider {
+  font-size: 2rem;
+  color: var(--clr-text-secondary);
+}
+
+.btnAddToCart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
