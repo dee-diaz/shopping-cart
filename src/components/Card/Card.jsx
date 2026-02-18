@@ -1,19 +1,24 @@
 import styles from './Card.module.css';
+import { Link } from 'react-router';
 
 export default function Card({ albumTitle, albumArtist, price }) {
   const altText = `${albumTitle} by ${albumArtist} album cover`;
   return (
     <article className={styles.card}>
-      <img
-        src="/images/mf-doom.jpg"
-        alt={altText}
-        className={styles.coverImage}
-      />
+      <Link to="product">
+        <img
+          src="/images/mf-doom.jpg"
+          alt={altText}
+          className={styles.coverImage}
+        />
+      </Link>
       <div className={styles.albumInfo}>
-        <div className={styles.albumDetails}>
-          <h3>MM..Food</h3>
-          <p>MF Doom</p>
-        </div>
+        <Link to="product">
+          <div className={styles.albumDetails}>
+            <h3>MM..Food</h3>
+            <p>MF Doom</p>
+          </div>
+        </Link>
         <div className={styles.actions}>
           <span className={styles.price} aria-label={`Price: $${price}`}>
             {`$${price}`}
