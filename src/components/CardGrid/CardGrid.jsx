@@ -5,14 +5,14 @@ export default function CardGrid() {
   return (
     <div className={styles.cardGrid}>
       <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
+      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
+      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
+      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
+      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
+      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
+      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
+      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
     </div>
   );
 }
