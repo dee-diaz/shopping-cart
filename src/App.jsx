@@ -1,12 +1,12 @@
-import HomePage from './routes/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import { Outlet } from 'react-router';
 
 function App() {
   return (
     <>
       <Navbar />
-      <HomePage />
+      <Outlet />
       <Footer />
     </>
   );
