@@ -15,7 +15,7 @@ export default function Footer() {
           </Link>
 
           <nav aria-label="Footer navigation">
-            <ul class={styles.footerNav}>
+            <ul className={styles.footerNav}>
               <li>
                 <Link href="/">Home</Link>
               </li>
@@ -133,7 +133,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <ul class={styles.legal}>
+          <ul className={styles.legal}>
             <li>Privacy policy</li>
             <li>Terms of Use</li>
           </ul>
