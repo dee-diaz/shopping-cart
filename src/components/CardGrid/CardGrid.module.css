@@ -1,0 +1,22 @@
+.cardGrid {
+  width: 100%;
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+
+  > div {
+    background-color: grey;
+    min-height: 24rem;
+  }
+}
+
+
+/* Desktop */
+@media (min-width: 992px) {
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1.25rem;
+    row-gap: 2.5rem;
+    margin-top: 0;
+  }
+}
