@@ -137,6 +137,10 @@ button {
   text-transform: uppercase;
 }
 
+a {
+  text-decoration: none;
+}
+
 input,
 button,
 textarea,
