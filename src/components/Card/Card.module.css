@@ -6,6 +6,7 @@
 .coverImage {
   height: 20rem;
   object-fit: cover;
+  width: 100%;
 }
 
 .albumInfo {
@@ -21,6 +22,7 @@
 
   h3 {
     font-weight: 600;
+    text-transform: capitalize;
   }
 
   p {
