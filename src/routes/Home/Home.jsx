@@ -10,7 +10,7 @@ export default function HomePage() {
       <SortDropdown />
       <div className={styles.wrapper}>
         <FilterSidebar />
-        <CardGrid />
+        <CardGrid></CardGrid>
       </div>
     </div>
   );

@@ -9,6 +9,10 @@
   margin-bottom: 1.5rem;
 }
 
+.wrapper {
+  padding-bottom: 6rem;
+}
+
 @media (min-width: 992px) {
   .heading {
     font-size: 2rem;
