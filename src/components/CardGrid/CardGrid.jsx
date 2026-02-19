@@ -1,23 +1,23 @@
 import styles from './CardGrid.module.css';
 import Card from '../Card/Card';
 
-export default function CardGrid() {
+export default function CardGrid({ albums }) {
   return (
     <div className={styles.cardGrid}>
-      <Card
-        albumTitle="Ritual Of Battle"
-        albumArtist="Jedi Mind Tricks"
-        price="29"
-        coverImgUrl="https://i.discogs.com/my_Gd5nsGzyb6Dm5LgWor0duRe9Fbx0HFHPPIQwBAr8/rs:fit/g:sm/q:90/h:597/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTE0/MjAtMTY0MTY4MzA3/OS02NTc1LmpwZWc.jpeg"
-      />
-      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
-      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
-      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
-      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
-      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
-      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
-      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
-      <Card albumTitle="MM..Food" albumArtist="MF Doom" price="29" />
+      {albums.map((album) => {
+        return (
+          <Card
+            key={album.id}
+            albumTitle={album.title}
+            albumArtist={album.artist}
+            coverImgUrl={album.coverImgUrl}
+            price={album.price}
+            onAddToCart={() =>
+              console.log(`${album.title} has been added to Cart`)
+            }
+          />
+        );
+      })}
     </div>
   );
 }
