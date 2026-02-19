@@ -1,13 +1,19 @@
 import styles from './Card.module.css';
 import { Link } from 'react-router';
 
-export default function Card({ albumTitle, albumArtist, price }) {
+export default function Card({
+  albumTitle,
+  albumArtist,
+  coverImgUrl,
+  price,
+  onAddToCart,
+}) {
   const altText = `${albumTitle} by ${albumArtist} album cover`;
   return (
     <article className={styles.card}>
       <Link to="product">
         <img
-          src="/images/mf-doom.jpg"
+          src={coverImgUrl || '/images/album-placeholder.webp'}
           alt={altText}
           className={styles.coverImage}
         />
@@ -15,13 +21,13 @@ export default function Card({ albumTitle, albumArtist, price }) {
       <div className={styles.albumInfo}>
         <Link to="product">
           <div className={styles.albumDetails}>
-            <h3>MM..Food</h3>
-            <p>MF Doom</p>
+            <h3>{albumTitle}</h3>
+            <p>{albumArtist}</p>
           </div>
         </Link>
         <div className={styles.actions}>
           <span className={styles.price} aria-label={`Price: $${price}`}>
-            {`$${price}`}
+            {`${price}`}
           </span>
           <span className={styles.divider} aria-hidden="true">
             |
@@ -29,6 +35,7 @@ export default function Card({ albumTitle, albumArtist, price }) {
           <button
             className={styles.btnAddToCart}
             aria-label={`Add ${albumTitle} by ${albumArtist} to cart`}
+            onClick={onAddToCart}
           >
             <svg
               width="24"
