@@ -13,6 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: start;
+  gap: 1rem;
 }
 
 .albumDetails {
@@ -32,7 +33,7 @@
 
 .actions {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 0.325rem;
 }
 
@@ -42,7 +43,8 @@
 }
 
 .divider {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  transform: translateY(-4px);
   color: var(--clr-text-secondary);
 }
 
