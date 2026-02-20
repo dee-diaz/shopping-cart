@@ -3,7 +3,7 @@ import Card from '../Card/Card';
 
 export default function CardGrid({ albums }) {
   return (
-    <div className={styles.cardGrid}>
+    <div className={styles.cardGrid} data-testid="card-grid">
       {albums.map((album) => {
         return (
           <Card
