@@ -1,0 +1,12 @@
+.productDescription {
+  color: var(--clr-text-secondary);
+  font-size: 1.125rem;
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 992px) {
+  .productDescription {
+    margin-bottom: 2.5rem;
+  }
+}
