@@ -98,5 +98,6 @@
 
   .socials {
     width: 10.5rem;
+    justify-content: end;
   }
 }
