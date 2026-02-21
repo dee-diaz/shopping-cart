@@ -1,6 +1,7 @@
 import styles from './ProductMeta.module.css';
 
 export default function ProductMeta({ year, genre, subgenres }) {
+  const subgenresStr = subgenres.join(', ');
   return (
     <dl className={styles.productMeta}>
       <div className={styles.row}>
@@ -13,7 +14,7 @@ export default function ProductMeta({ year, genre, subgenres }) {
       </div>
       <div className={styles.row}>
         <dt>Style:</dt>
-        <dd>{subgenres}</dd>
+        <dd>{subgenresStr}</dd>
       </div>
     </dl>
   );
