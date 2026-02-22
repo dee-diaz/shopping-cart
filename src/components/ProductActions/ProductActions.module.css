@@ -1,0 +1,22 @@
+.actions {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 992px) {
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .wrapper {
+    gap: 1.75rem;
+  }
+}
