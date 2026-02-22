@@ -1,0 +1,30 @@
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  border: 1px solid var(--clr-text-secondary);
+  width: fit-content;
+}
+
+.qtyBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.875rem;
+
+  svg {
+    fill: var(--clr-text-primary);
+  }
+
+  &:disabled {
+    svg {
+      fill: #C5C5C5;
+    }
+  }
+}
+
+.number {
+  font-size: 1.25rem;
+}
