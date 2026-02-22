@@ -1,13 +1,19 @@
-.btnPrimary {
+.btnPrimary,
+.iconBtn {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.btnPrimary {
+  gap: 0.5rem;
   background: var(--clr-bg-btn-primary);
   color: var(--clr-text-inversed);
   padding: 0.75rem 1.5rem;
   border-radius: 0.25rem;
   text-transform: none;
   font-size: 1.125rem;
+  width: fit-content;
 
   &:disabled {
     pointer-events: none;
@@ -30,4 +36,15 @@
   width: 1.25rem;
   height: 1.25rem;
   fill: var(--clr-text-inversed);
+}
+
+.iconBtn {
+  width: 2.75rem;
+  height: 2.75rem;
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+    fill: var(--clr-text-primary);
+  }
 }
