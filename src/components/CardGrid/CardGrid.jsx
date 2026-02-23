@@ -1,9 +1,14 @@
 import styles from './CardGrid.module.css';
 import Card from '../Card/Card';
 
-export default function CardGrid({ albums }) {
+export default function CardGrid({ albums, variant }) {
   return (
-    <div className={styles.cardGrid} data-testid="card-grid">
+    <div
+      className={
+        variant === 'four-cols' ? styles.cardGridFour : styles.cardGrid
+      }
+      data-testid="card-grid"
+    >
       {albums.map((album) => {
         return (
           <Card
