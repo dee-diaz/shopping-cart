@@ -12,7 +12,7 @@
   --clr-text-disabled: hsla(0, 0%, 80%, 1);
 
   /* Easings */
-  --ease-out: cubic-bezier(.215, .61, .355, 1);
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
 @font-face {
@@ -176,5 +176,9 @@ h4 {
     padding: 0;
     max-width: 1360px;
     margin-inline: auto;
+  }
+
+  h1 {
+    font-size: 3rem;
   }
 }
