@@ -1,0 +1,40 @@
+.title {
+  margin-bottom: 1.5rem;
+}
+
+.list {
+  columns: 1;
+  list-style: none;
+  padding: 0;
+}
+
+.listItem,
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.listItem {
+  font-size: 1.125rem;
+  justify-content: space-between;
+
+  &:not(:last-child) {
+    margin-bottom: 0.875rem;
+  }
+}
+
+.wrapper {
+  gap: 1rem;
+}
+
+@media (min-width: 992px) {
+  .list {
+    columns: 2;
+    column-gap: 6rem;
+  }
+
+  .title {
+    margin-bottom: 1.75rem;
+    font-size: 2rem;
+  }
+}
