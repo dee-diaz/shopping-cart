@@ -7,7 +7,7 @@ import ProductActions from '../ProductActions/ProductActions';
 
 export default function ProductDetails() {
   return (
-    <div className={styles.productDetails}>
+    <div className={styles.productDetails} data-testid="product-details">
       <ArtistHeader
         artistName="MF Doom"
         artistImg="/images/mf-doom.jpg"
