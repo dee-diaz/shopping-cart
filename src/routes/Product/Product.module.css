@@ -1,0 +1,31 @@
+.productPage {
+  padding-top: 2.5rem;
+  padding-bottom: 6rem;
+  min-height: 80svh;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.product {
+  display: grid;
+}
+
+@media (min-width: 992px) {
+  .productPage {
+    padding: 2.5rem 1rem 6rem 1rem;
+  }
+
+  .product {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 6rem;
+    row-gap: 4rem;
+  }
+}
