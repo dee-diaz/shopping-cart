@@ -42,11 +42,37 @@ describe('Wishlist', () => {
     expect(emptyState).toBeInTheDocument();
   });
 
+  it('renders recommendations', () => {
+    render(<Wishlist savedAlbums={mockSavedAlbums} />, {
+      wrapper: MemoryRouter,
+    });
+    const recommendations = screen.getByRole('region');
+    expect(recommendations).toBeInTheDocument();
+  });
+
   it('renders 2 card grids', () => {
     render(<Wishlist savedAlbums={mockSavedAlbums} />, {
       wrapper: MemoryRouter,
     });
     const cardGrids = screen.getAllByTestId('card-grid');
     expect(cardGrids).toHaveLength(2);
+  });
+});
+
+describe('EmptyState', () => {
+  it('button links to homepage', () => {
+    render(<EmptyState />, {
+      wrapper: MemoryRouter,
+    });
+    const link = screen.getByRole('link', { name: /return/i });
+    expect(link).toHaveAttribute('href', '/');
+  });
+
+  it('renders status text', () => {
+    render(<EmptyState />, {
+      wrapper: MemoryRouter,
+    });
+    const text = screen.getByText(/you haven’t saved any items/i);
+    expect(text).toBeInTheDocument();
   });
 });
