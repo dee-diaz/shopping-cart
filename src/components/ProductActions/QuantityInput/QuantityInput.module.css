@@ -5,7 +5,7 @@
   overflow: hidden;
   border-radius: 0.25rem;
   border: 1px solid var(--clr-text-secondary);
-  width: fit-content;
+  width: 8.5rem;
 }
 
 .qtyBtn {
