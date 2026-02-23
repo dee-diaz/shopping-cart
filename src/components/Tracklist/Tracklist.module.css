@@ -28,6 +28,10 @@
 }
 
 @media (min-width: 992px) {
+  .section {
+    grid-column: span 2;
+  }
+
   .list {
     columns: 2;
     column-gap: 6rem;

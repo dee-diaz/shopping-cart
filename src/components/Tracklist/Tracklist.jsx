@@ -2,7 +2,7 @@ import styles from './Tracklist.module.css';
 
 export default function Tracklist({ tracklist }) {
   return (
-    <section aria-labelledby="tracklist-title">
+    <section className={styles.section} aria-labelledby="tracklist-title">
       <h2 id="tracklist-title" className={styles.title}>
         Tracklist
       </h2>
