@@ -1,6 +1,7 @@
 .wishlistPage {
   padding-top: 3rem;
   padding-bottom: 6rem;
+  min-height: 80vh;
 }
 
 .title {
