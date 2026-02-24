@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import Wishlist, { EmptyState } from './Wishlist';
+import Wishlist from './Wishlist';
 
 const mockSavedAlbums = [
   {
@@ -56,23 +56,5 @@ describe('Wishlist', () => {
     });
     const cardGrids = screen.getAllByTestId('card-grid');
     expect(cardGrids).toHaveLength(2);
-  });
-});
-
-describe('EmptyState', () => {
-  it('button links to homepage', () => {
-    render(<EmptyState />, {
-      wrapper: MemoryRouter,
-    });
-    const link = screen.getByRole('link', { name: /return/i });
-    expect(link).toHaveAttribute('href', '/');
-  });
-
-  it('renders status text', () => {
-    render(<EmptyState />, {
-      wrapper: MemoryRouter,
-    });
-    const text = screen.getByText(/you haven’t saved any items/i);
-    expect(text).toBeInTheDocument();
   });
 });
