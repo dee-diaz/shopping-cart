@@ -1,0 +1,15 @@
+.cartPage {
+  padding-top: 3rem;
+  padding-bottom: 6rem;
+  min-height: 80vh;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .cartPage {
+    padding-top: 4rem;
+  }
+}
