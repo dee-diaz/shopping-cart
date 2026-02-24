@@ -173,7 +173,6 @@ h4 {
 
 @media (min-width: 992px) {
   .container {
-    padding: 0;
     max-width: 1360px;
     margin-inline: auto;
   }
