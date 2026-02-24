@@ -46,6 +46,11 @@
     width: 2rem;
     height: 2rem;
     fill: var(--clr-text-primary);
+    transition: fill 0.3s ease;
+  }
+
+  &:hover svg {
+    fill: var(--clr-accent-pink);
   }
 }
 
