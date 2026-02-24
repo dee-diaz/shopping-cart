@@ -1,0 +1,182 @@
+.cartHeader {
+  display: none;
+}
+
+.cartList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cartItem {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-areas:
+    'link link link'
+    '. quantity remove';
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--clr-divider);
+
+  button {
+    justify-self: end;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+.itemLink {
+  grid-area: link;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.desktopPrice {
+  display: none;
+}
+
+.quantityWrapper {
+  margin-left: 7rem;
+}
+
+.itemTotal {
+  display: none;
+}
+
+.removeBtn {
+  grid-area: remove;
+}
+
+.img {
+  width: 6.25rem;
+  height: 6.25rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.albumInfo {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.mobilePrice {
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.cartSummary {
+  margin-top: 2.5rem;
+
+  button {
+    width: 100%;
+    max-width: 20rem;
+  }
+}
+
+.cartTotalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  > span,
+  > strong {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.cartShippingNote {
+  color: var(--clr-text-secondary);
+  margin-bottom: 2.5rem;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  clip-path: inset(50%);
+}
+
+@media (min-width: 992px) {
+  .cartHeader {
+    display: grid;
+    grid-template-columns: 50% 12% 20% 12% auto;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--clr-divider);
+    color: var(--clr-text-secondary);
+  }
+
+  .cartItem {
+    grid-template-columns: 50% 12% 20% 12% auto;
+    grid-template-areas: 'link price quantity total remove';
+    gap: 0;
+  }
+
+  .itemLink {
+    gap: 1.25rem;
+  }
+
+  .img {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .albumInfo {
+    gap: 0.5rem;
+  }
+
+  .title,
+  .artist {
+    font-size: 1.125rem;
+  }
+
+  .mobilePrice {
+    display: none;
+  }
+
+  .desktopPrice {
+    grid-area: price;
+    display: block;
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+
+  .quantityWrapper {
+    grid-area: quantity;
+    margin: revert;
+  }
+
+  .itemTotal {
+    grid-area: total;
+    display: block;
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+
+  .removeBtn {
+    grid-area: remove;
+  }
+
+  .cartSummary {
+    width: 20rem;
+    margin-inline-start: auto;
+    margin-top: 1.75rem;
+  }
+}
