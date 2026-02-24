@@ -1,7 +1,7 @@
 import styles from './Wishlist.module.css';
 import CardGrid from '../../components/CardGrid/CardGrid';
 import Recommendations from '../../components/Recommendations/Recommendations';
-import { Link } from 'react-router';
+import EmptyState from '../../components/EmptyState/EmptyState';
 
 export default function WishlistPage({ savedAlbums }) {
   const isEmpty = !savedAlbums || savedAlbums.length === 0;
@@ -12,7 +12,7 @@ export default function WishlistPage({ savedAlbums }) {
         <h1 className={styles.title}>Wishlist</h1>
 
         {isEmpty ? (
-          <EmptyState />
+          <EmptyState text="You haven’t saved any items to your wishlist yet." />
         ) : (
           <CardGrid albums={savedAlbums} variant="four-cols" />
         )}
@@ -20,19 +20,5 @@ export default function WishlistPage({ savedAlbums }) {
         <Recommendations />
       </div>
     </section>
-  );
-}
-
-export function EmptyState() {
-  return (
-    <div role="status">
-      <p className={styles.emptyStateText}>
-        You haven’t saved any items to your wishlist yet.
-      </p>
-
-      <Link className={styles.btn} to="/">
-        Return to shop
-      </Link>
-    </div>
   );
 }
