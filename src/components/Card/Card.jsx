@@ -11,7 +11,7 @@ export default function Card({
   const altText = `${albumTitle} by ${albumArtist} album cover`;
   return (
     <article className={styles.card}>
-      <Link to="product">
+      <Link to="/product">
         <img
           src={coverImgUrl || '/images/album-placeholder.webp'}
           alt={altText}
@@ -19,7 +19,7 @@ export default function Card({
         />
       </Link>
       <div className={styles.albumInfo}>
-        <Link to="product">
+        <Link to="/product">
           <div className={styles.albumDetails}>
             <h3>{albumTitle}</h3>
             <p>{albumArtist}</p>

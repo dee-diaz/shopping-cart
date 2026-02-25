@@ -48,7 +48,7 @@ export function CartItem({ img, title, artist, price, quantity }) {
 
   return (
     <li className={styles.cartItem}>
-      <Link to="product" className={styles.itemLink}>
+      <Link to="/product" className={styles.itemLink}>
         <img
           src={img || '/images/album-placeholder.webp'}
           alt={`${title} album cover`}
