@@ -7,8 +7,7 @@ import HomePage from './routes/Home/Home.jsx';
 import ProductPage from './routes/Product/Product.jsx';
 import CartPage from './routes/Cart/Cart.jsx';
 import WishlistPage from './routes/Wishlist/Wishlist.jsx';
-import AlbumsContextProvider from './contexts/AlbumsContext.jsx';
-import CartContextProvider from './contexts/CartContext.jsx';
+import ShopProviders from './contexts/ShopProviders.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,10 +24,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AlbumsContextProvider>
-      <CartContextProvider>
-        <RouterProvider router={router} />
-      </CartContextProvider>
-    </AlbumsContextProvider>
+    <ShopProviders>
+      <RouterProvider router={router} />
+    </ShopProviders>
   </StrictMode>,
 );
