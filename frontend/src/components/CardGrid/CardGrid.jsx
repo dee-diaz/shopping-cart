@@ -1,11 +1,7 @@
 import styles from './CardGrid.module.css';
 import Card from '../Card/Card';
-import { useContext } from 'react';
-import { AlbumsContext } from '../../contexts/AlbumsContext';
 
-export default function CardGrid({ page, variant }) {
-  const { albums } = useContext(AlbumsContext);
-
+export default function CardGrid({ albums, variant }) {
   return (
     <div
       className={
@@ -13,21 +9,20 @@ export default function CardGrid({ page, variant }) {
       }
       data-testid="card-grid"
     >
-      {page === 'home' &&
-        albums.map((album) => {
-          return (
-            <Card
-              key={album.id}
-              albumTitle={album.title}
-              albumArtist={album.artists[0].name}
-              coverImgUrl={album.images[0].uri}
-              price={generatePrice(album.lowest_price)}
-              onAddToCart={() =>
-                console.log(`${album.title} has been added to Cart`)
-              }
-            />
-          );
-        })}
+      {albums.map((album) => {
+        return (
+          <Card
+            key={album.id}
+            albumTitle={album.title}
+            albumArtist={album.artists[0].name}
+            coverImgUrl={album.images[0].uri}
+            price={generatePrice(album.lowest_price)}
+            onAddToCart={() =>
+              console.log(`${album.title} has been added to Cart`)
+            }
+          />
+        );
+      })}
     </div>
   );
 }
