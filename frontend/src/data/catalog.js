@@ -1,14 +1,14 @@
 export const GENRES = {
-  ALTERNATIVE: 'alternative',
-  ELECTRONIC: 'electronic',
-  HIPHOP: 'hip-hop',
-  HOUSE: 'house',
-  JAZZ: 'jazz',
-  LATIN: 'latin',
-  POP: 'pop',
-  RNB: 'r&b',
-  ROCK: 'rock',
-  TECHNO: 'techno',
+  ALTERNATIVE: 'Alternative',
+  ELECTRONIC: 'Electronic',
+  HIPHOP: 'Hip Hop',
+  HOUSE: 'House',
+  JAZZ: 'Jazz',
+  LATIN: 'Latin',
+  POP: 'Pop',
+  RNB: 'R&B',
+  ROCK: 'Rock',
+  TECHNO: 'Techno',
 };
 
 export const catalog = {
