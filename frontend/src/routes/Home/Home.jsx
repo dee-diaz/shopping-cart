@@ -8,7 +8,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import LoadingState from '../../components/LoadingState/LoadingState';
 
 export default function HomePage() {
-  const { error, loading } = useContext(AlbumsContext);
+  const { albums, error, loading } = useContext(AlbumsContext);
 
   return (
     <div className={`container ${styles.container}`}>
@@ -21,7 +21,7 @@ export default function HomePage() {
         ) : error ? (
           <ErrorMessage message={error.message} />
         ) : (
-          <CardGrid page="home" />
+          <CardGrid albums={albums} />
         )}
       </div>
     </div>

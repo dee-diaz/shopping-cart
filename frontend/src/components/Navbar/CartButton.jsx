@@ -1,7 +1,12 @@
 import styles from './Navbar.module.css';
 import { Link } from 'react-router';
+import { useContext } from 'react';
+import { CartContext } from '../../contexts/CartContext';
 
-export default function CartButton({ count }) {
+export default function CartButton() {
+  const { cartItems } = useContext(CartContext);
+  const count = cartItems.length;
+
   const label =
     count > 0
       ? `Go to cart, ${count} item${count > 1 ? 's' : ''}`
