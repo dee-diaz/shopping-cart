@@ -1,6 +1,12 @@
 import styles from './FilterSidebar.module.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Button from '../Button/Button';
+import {
+  fetchGenreCatalog,
+  fetchFeatured,
+} from '../../services/catalogService';
+import { AlbumsContext } from '../../contexts/AlbumsContext';
+import { GENRES } from '../../data/catalog';
 
 function FilterSidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,6 +15,8 @@ function FilterSidebar() {
     min: undefined,
     max: undefined,
   });
+
+  const { setAlbums, setError, setLoading } = useContext(AlbumsContext);
 
   function handleGenreChange(e) {
     const { value, checked } = e.target;
@@ -24,6 +32,41 @@ function FilterSidebar() {
     setPriceRange({ min, max });
     setIsOpen(false);
   }
+
+  useEffect(() => {
+    let loadAlbums;
+    setLoading(true);
+
+    if (selectedGenres.length !== 0) {
+      loadAlbums = async () => {
+        try {
+          const results = await Promise.all(
+            selectedGenres.map((genre) => fetchGenreCatalog(genre)),
+          );
+
+          const merged = results.flat();
+          setAlbums(merged);
+        } catch (error) {
+          setError(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+    } else {
+      loadAlbums = async () => {
+        try {
+          const data = await fetchFeatured();
+          setAlbums(data);
+        } catch (error) {
+          setError(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+    }
+    loadAlbums();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedGenres]);
 
   return (
     <>
@@ -48,24 +91,11 @@ function FilterSidebar() {
 }
 
 export function GenreFilter({ selectedGenres, onChange }) {
-  const genres = [
-    'Alternative',
-    'Electronic',
-    'Hip Hop',
-    'House',
-    'Jazz',
-    'Latin',
-    'Pop',
-    'R&B',
-    'Rock',
-    'Techno',
-  ];
-
   return (
     <div className={styles.genreFilter}>
       <h3>Genre</h3>
       <div className={styles.checkboxes}>
-        {genres.map((genre) => (
+        {Object.values(GENRES).map((genre) => (
           <label key={genre} className={styles.checkboxLabel}>
             <input
               type="checkbox"
