@@ -1,28 +1,25 @@
-import { catalog, GENRES } from '../data/catalog';
+import { catalog } from '../data/catalog';
 
-const headers = new Headers();
-headers.append('User-Agent', 'VinylShop/1.0');
-
-const options = {
-  method: 'GET',
-  headers: headers,
-};
-
-const baseUrl = 'https://api.discogs.com/';
-const endpoint = 'masters/';
-const url = baseUrl + endpoint;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const endpoint = '/albums/';
+const url = API_URL + endpoint;
 
 export async function fetchGenreCatalog(genre) {
   const albums = Object.values(catalog[genre]);
 
   try {
-    const promises = albums.map((album) =>
-      fetch(url + album.masterId, options),
-    );
+    const promises = albums.map(async (album) => {
+      const res = await fetch(url + album.masterId);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      return res.json();
+    });
     const results = await Promise.all(promises);
-    console.log(results);
+    return results;
   } catch (error) {
-    console.log(error);
+    console.error('Error fetching genre catalog:', error);
+    throw error;
   }
 }
 
@@ -31,12 +28,17 @@ export async function fetchFeatured() {
   const featuredAlbums = values.filter((v) => v.featured === true);
 
   try {
-    const promises = featuredAlbums.map((album) =>
-      fetch(url + album.masterId, options),
-    );
+    const promises = featuredAlbums.map(async (album) => {
+      const res = await fetch(url + album.masterId);
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      return res.json();
+    });
     const results = await Promise.all(promises);
-    console.log(results);
+    return results;
   } catch (error) {
-    console.log(error);
+    console.error('Error fetching featured albums:', error);
+    throw error;
   }
 }
