@@ -4,41 +4,23 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const endpoint = '/albums/';
 const url = API_URL + endpoint;
 
-export async function fetchGenreCatalog(genre) {
-  const albums = Object.values(catalog[genre]);
-
-  try {
-    const promises = albums.map(async (album) => {
-      const res = await fetch(url + album.masterId);
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      return res.json();
-    });
-    const results = await Promise.all(promises);
-    return results;
-  } catch (error) {
-    console.error('Error fetching genre catalog:', error);
-    throw error;
+async function fetchAlbum(masterId) {
+  const res = await fetch(url + masterId);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
   }
+  return res.json();
 }
 
-export async function fetchFeatured() {
-  const values = Object.values(catalog).flat();
-  const featuredAlbums = values.filter((v) => v.featured === true);
+export function fetchGenreCatalog(genre) {
+  const albums = Object.values(catalog[genre]);
+  return Promise.all(albums.map((album) => fetchAlbum(album.masterId)));
+}
 
-  try {
-    const promises = featuredAlbums.map(async (album) => {
-      const res = await fetch(url + album.masterId);
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      return res.json();
-    });
-    const results = await Promise.all(promises);
-    return results;
-  } catch (error) {
-    console.error('Error fetching featured albums:', error);
-    throw error;
-  }
+export function fetchFeatured() {
+  const featuredAlbums = Object.values(catalog)
+    .flat()
+    .filter((v) => v.featured === true);
+
+  return Promise.all(featuredAlbums.map((album) => fetchAlbum(album.masterId)));
 }
