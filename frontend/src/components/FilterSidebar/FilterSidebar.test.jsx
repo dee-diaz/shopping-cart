@@ -8,10 +8,15 @@ import FilterSidebar, {
   ModalCloseButton,
 } from './FilterSidebar';
 import styles from './FilterSidebar.module.css';
+import ShopProviders from '../../contexts/ShopProviders';
 
 describe('FilterSidebar', () => {
   it('is present in the document', () => {
-    render(<FilterSidebar />);
+    render(
+      <ShopProviders>
+        <FilterSidebar />
+      </ShopProviders>,
+    );
     const sidebar = screen.getByRole('region', {
       name: 'Filters',
     });
@@ -20,7 +25,11 @@ describe('FilterSidebar', () => {
 
   it('opens sidebar when filter icon is clicked', async () => {
     const user = userEvent.setup();
-    render(<FilterSidebar />);
+    render(
+      <ShopProviders>
+        <FilterSidebar />
+      </ShopProviders>,
+    );
     const sidebar = screen.getByRole('region', { name: 'Filters' });
 
     await user.click(screen.getByRole('button', { name: /open/i }));
@@ -30,7 +39,11 @@ describe('FilterSidebar', () => {
 
   it('close sidebar when close icon is clicked', async () => {
     const user = userEvent.setup();
-    render(<FilterSidebar />);
+    render(
+      <ShopProviders>
+        <FilterSidebar />
+      </ShopProviders>,
+    );
     const sidebar = screen.getByRole('region', { name: 'Filters' });
 
     await user.click(screen.getByRole('button', { name: /open/i }));
