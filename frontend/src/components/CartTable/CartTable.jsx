@@ -3,6 +3,8 @@ import QuantityInput from '../ProductActions/QuantityInput/QuantityInput';
 import IconButton from '../Button/IconButton';
 import Button from '../Button/Button';
 import { Link } from 'react-router';
+import { CartContext } from '../../contexts/CartContext';
+import { useContext } from 'react';
 
 const trashIcon = (
   <svg
@@ -15,7 +17,8 @@ const trashIcon = (
   </svg>
 );
 
-export default function CartList({ cartProducts }) {
+export default function CartList() {
+  const { cartItems } = useContext(CartContext);
   return (
     <>
       <div className={styles.cartHeader} aria-hidden="true">
@@ -26,9 +29,9 @@ export default function CartList({ cartProducts }) {
       </div>
 
       <ul className={styles.cartList} aria-label="Cart items">
-        {cartProducts.map((product) => (
+        {cartItems.map((product) => (
           <CartItem
-            key={product.title}
+            key={product.id}
             img={product.coverImgUrl}
             title={product.title}
             artist={product.artist}
