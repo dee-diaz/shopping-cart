@@ -4,7 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const endpoint = '/albums/';
 const url = API_URL + endpoint;
 
-async function fetchAlbum(masterId) {
+export async function fetchAlbum(masterId) {
   const res = await fetch(url + masterId);
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
