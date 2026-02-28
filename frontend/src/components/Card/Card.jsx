@@ -1,14 +1,30 @@
 import styles from './Card.module.css';
 import { Link } from 'react-router';
+import { useContext } from 'react';
+import { CartContext } from '../../contexts/CartContext';
 
 export default function Card({
+  albumId,
   albumTitle,
   albumArtist,
   coverImgUrl,
   price,
-  onAddToCart,
 }) {
+  const { setCartItems } = useContext(CartContext);
   const altText = `${albumTitle} by ${albumArtist} album cover`;
+
+  function onAddToCart() {
+    const obj = {
+      id: albumId,
+      title: albumTitle,
+      artist: albumArtist,
+      coverImgUrl,
+      price,
+      quantity: 1,
+    };
+    setCartItems((prev) => [...prev, obj]);
+  }
+
   return (
     <article className={styles.card}>
       <Link to="/product">
@@ -32,6 +48,7 @@ export default function Card({
           <span className={styles.divider} aria-hidden="true">
             |
           </span>
+
           <button
             className={styles.btnAddToCart}
             aria-label={`Add ${albumTitle} by ${albumArtist} to cart`}

@@ -13,6 +13,7 @@ export default function CardGrid({ albums, variant }) {
         return (
           <Card
             key={album.id}
+            albumId={album.id}
             albumTitle={album.title}
             albumArtist={album.artists[0].name}
             coverImgUrl={album.images[0].uri}
