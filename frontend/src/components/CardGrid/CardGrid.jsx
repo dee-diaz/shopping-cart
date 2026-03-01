@@ -3,10 +3,19 @@ import Card from '../Card/Card';
 import { sortAlbums } from '../../services/sortService';
 import { useContext } from 'react';
 import { AlbumsContext } from '../../contexts/AlbumsContext';
+import filterAlbums from '../../services/filterService';
+import { getDisplayPrice } from '../../services/priceService';
 
-export default function CardGrid({ albums, variant }) {
+export default function CardGrid({ albums, variant, priceRange }) {
   const { sortType } = useContext(AlbumsContext);
   const sorted = sortAlbums(albums, sortType);
+  let filtered;
+  const hasFilter =
+    priceRange.min !== undefined || priceRange.max !== undefined;
+  if (hasFilter)
+    filtered = filterAlbums(sorted, priceRange.min, priceRange.max);
+  const albumsToRender = filtered !== undefined ? filtered : sorted;
+
   return (
     <div
       className={
@@ -14,7 +23,7 @@ export default function CardGrid({ albums, variant }) {
       }
       data-testid="card-grid"
     >
-      {sorted.map((album) => {
+      {albumsToRender.map((album) => {
         return (
           <Card
             key={album.id}
@@ -23,7 +32,7 @@ export default function CardGrid({ albums, variant }) {
             albumTitle={album.title}
             albumArtist={album.artists[0].name}
             coverImgUrl={album.images[0].uri}
-            price={generatePrice(album.lowest_price)}
+            price={getDisplayPrice(album.lowest_price)}
             onAddToCart={() =>
               console.log(`${album.title} has been added to Cart`)
             }
@@ -32,10 +41,4 @@ export default function CardGrid({ albums, variant }) {
       })}
     </div>
   );
-}
-
-function generatePrice(lowestPrice) {
-  const margin = 20;
-  if (lowestPrice) return `$${Math.round(lowestPrice) + margin}`;
-  return `$${margin + 11}`;
 }

@@ -8,14 +8,9 @@ import {
 import { AlbumsContext } from '../../contexts/AlbumsContext';
 import { GENRES } from '../../data/catalog';
 
-function FilterSidebar() {
+function FilterSidebar({ onApply, priceRange }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [priceRange, setPriceRange] = useState({
-    min: undefined,
-    max: undefined,
-  });
-
   const { setAlbums, setError, setLoading } = useContext(AlbumsContext);
 
   function handleGenreChange(e) {
@@ -29,7 +24,7 @@ function FilterSidebar() {
   }
 
   function handlePriceFilterChange(min, max) {
-    setPriceRange({ min, max });
+    onApply(min, max);
     setIsOpen(false);
   }
 
@@ -122,7 +117,10 @@ export function PriceFilter({ appliedValue, onApply }) {
   }, [appliedValue]);
 
   function handleApply() {
-    onApply(draftMin, draftMax);
+    onApply(
+      draftMin === '' ? undefined : Number(draftMin),
+      draftMax === '' ? undefined : Number(draftMax),
+    );
   }
 
   return (
