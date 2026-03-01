@@ -1,7 +1,12 @@
 import styles from './CardGrid.module.css';
 import Card from '../Card/Card';
+import { sortAlbums } from '../../services/sortService';
+import { useContext } from 'react';
+import { AlbumsContext } from '../../contexts/AlbumsContext';
 
 export default function CardGrid({ albums, variant }) {
+  const { sortType } = useContext(AlbumsContext);
+  const sorted = sortAlbums(albums, sortType);
   return (
     <div
       className={
@@ -9,11 +14,12 @@ export default function CardGrid({ albums, variant }) {
       }
       data-testid="card-grid"
     >
-      {albums.map((album) => {
+      {sorted.map((album) => {
         return (
           <Card
             key={album.id}
             albumId={album.id}
+            genre={album.genres[0]}
             albumTitle={album.title}
             albumArtist={album.artists[0].name}
             coverImgUrl={album.images[0].uri}
