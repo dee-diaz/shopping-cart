@@ -1,95 +1,45 @@
 import styles from './Product.module.css';
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 import ProductDetails from '../../components/ProductDetails/ProductDetails';
 import Tracklist from '../../components/Tracklist/Tracklist';
 import ProductGallery from '../../components/ProductGallery/ProductGallery';
-
-const mockTracklist = [
-  { position: 'A1', title: 'Beef Rapp', duration: '4:39' },
-  { position: 'A2', title: 'Hoe Cakes', duration: '3:54' },
-  { position: 'A3', title: 'Potholderz', duration: '3:20' },
-  { position: 'B1', title: 'One Beer', duration: '4:18' },
-  { position: 'B2', title: 'Deep Fried Frenz', duration: '4:56' },
-  { position: 'B3', title: 'Poo-Putt Platter', duration: '1:13' },
-  { position: 'B4', title: 'Fillet-O-Rapper', duration: '1:53' },
-  { position: 'B5', title: 'Gumbo', duration: '0:50' },
-  { position: 'C1', title: 'Fig Leaf Bi-Carbonate', duration: '3:19' },
-  { position: 'C2', title: 'Kon Karne', duration: '2:51' },
-  { position: 'C3', title: 'Guinnessez', duration: '4:41' },
-  { position: 'D1', title: 'Kon Queso', duration: '4:00' },
-  { position: 'D2', title: 'Rapp Snitch Knishes', duration: '2:52' },
-  { position: 'D3', title: 'Vomitspit', duration: '2:48' },
-  { position: 'D4', title: 'Kookies', duration: '4:10' },
-];
-
-const mockImgArr = [
-  {
-    type: 'primary',
-    uri: 'https://i.discogs.com/hdGhbaRjPSMBPhA52lUkubOw_1m1FbN6edkbqEwy9qo/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMTg1OTcyMzU0/LmpwZWc.jpeg',
-    resource_url:
-      'https://i.discogs.com/hdGhbaRjPSMBPhA52lUkubOw_1m1FbN6edkbqEwy9qo/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMTg1OTcyMzU0/LmpwZWc.jpeg',
-    uri150:
-      'https://i.discogs.com/v6GOVjVhFCsQLUPtooQiRE95Ozc-DqyUV6xj7jZTo30/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMTg1OTcyMzU0/LmpwZWc.jpeg',
-    width: 600,
-    height: 600,
-  },
-  {
-    type: 'secondary',
-    uri: 'https://i.discogs.com/ztYMVwvKLpc_Lor-KyNVR-TPhSDoQKbhRs9qX0B_HNQ/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMTg1OTcyNDA3/LmpwZWc.jpeg',
-    resource_url:
-      'https://i.discogs.com/ztYMVwvKLpc_Lor-KyNVR-TPhSDoQKbhRs9qX0B_HNQ/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMTg1OTcyNDA3/LmpwZWc.jpeg',
-    uri150:
-      'https://i.discogs.com/aT_pbRhkyQjGH_O9imM4FthyUBN3lKkchYl5TELYe3k/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMTg1OTcyNDA3/LmpwZWc.jpeg',
-    width: 600,
-    height: 600,
-  },
-  {
-    type: 'secondary',
-    uri: 'https://i.discogs.com/921qt_75qE-P5s4q33RyQy-VhKqEkjFNWUal8O2wXfM/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTEx/LTc5NzguanBlZw.jpeg',
-    resource_url:
-      'https://i.discogs.com/921qt_75qE-P5s4q33RyQy-VhKqEkjFNWUal8O2wXfM/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTEx/LTc5NzguanBlZw.jpeg',
-    uri150:
-      'https://i.discogs.com/VjS13oxUH73KORDaE_wRZPv2B6a4pD1MoRe56pg5PCA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTEx/LTc5NzguanBlZw.jpeg',
-    width: 598,
-    height: 600,
-  },
-  {
-    type: 'secondary',
-    uri: 'https://i.discogs.com/37Uc5hPUbgjeu0XJf1Ua10jlQObVi0hHMuy5Ze0OtuE/rs:fit/g:sm/q:90/h:600/w:597/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTE5/LTc5NzAuanBlZw.jpeg',
-    resource_url:
-      'https://i.discogs.com/37Uc5hPUbgjeu0XJf1Ua10jlQObVi0hHMuy5Ze0OtuE/rs:fit/g:sm/q:90/h:600/w:597/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTE5/LTc5NzAuanBlZw.jpeg',
-    uri150:
-      'https://i.discogs.com/fKK6SeflWJdv0pcx_3fo6vdpTzXnF1As_GCFyvRTniQ/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTE5/LTc5NzAuanBlZw.jpeg',
-    width: 597,
-    height: 600,
-  },
-  {
-    type: 'secondary',
-    uri: 'https://i.discogs.com/6EjK-9hO2vyvuFMtZGTas93DJPqBmcD2vNHPVNLXDwI/rs:fit/g:sm/q:90/h:598/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTQ3/LTMwMTguanBlZw.jpeg',
-    resource_url:
-      'https://i.discogs.com/6EjK-9hO2vyvuFMtZGTas93DJPqBmcD2vNHPVNLXDwI/rs:fit/g:sm/q:90/h:598/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTQ3/LTMwMTguanBlZw.jpeg',
-    uri150:
-      'https://i.discogs.com/xaV2J7lmeQvSTBK5mc-lydLzlS8eBfRj5pHPkaCZ_kM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTQ3/LTMwMTguanBlZw.jpeg',
-    width: 600,
-    height: 598,
-  },
-  {
-    type: 'secondary',
-    uri: 'https://i.discogs.com/qYiMdUTdf0HxEG-H2VeK-HRrKc8sT4tbAR3jho0Ni10/rs:fit/g:sm/q:90/h:600/w:597/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTU2/LTcyNDIuanBlZw.jpeg',
-    resource_url:
-      'https://i.discogs.com/qYiMdUTdf0HxEG-H2VeK-HRrKc8sT4tbAR3jho0Ni10/rs:fit/g:sm/q:90/h:600/w:597/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTU2/LTcyNDIuanBlZw.jpeg',
-    uri150:
-      'https://i.discogs.com/T9KbbxZuHTPvy3WnoVn4KFnT1alewqpc5uK7vVWXt6g/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM1NjU5/Mi0xMzQ1ODQ2OTU2/LTcyNDIuanBlZw.jpeg',
-    width: 597,
-    height: 600,
-  },
-];
+import { fetchAlbum } from '../../services/catalogService';
+import { useEffect, useState } from 'react';
+import LoadingState from '../../components/LoadingState/LoadingState';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 export default function ProductPage() {
+  const [albumData, setAlbumData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    async function loadAlbum() {
+      setLoading(true);
+      try {
+        const data = await fetchAlbum(id);
+        setAlbumData(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadAlbum();
+  }, [id]);
+
+  if (!albumData || loading) {
+    return <LoadingState />;
+  }
+
+  if (error) return <ErrorMessage message={error.message} />;
+
   let imgArr;
-  mockImgArr.length > 4
-    ? (imgArr = mockImgArr.slice(0, 4))
-    : (imgArr = mockImgArr);
+  albumData.images.length > 4
+    ? (imgArr = albumData.images.slice(0, 4))
+    : (imgArr = albumData.images);
 
   return (
     <div className={styles.productPage}>
@@ -111,9 +61,17 @@ export default function ProductPage() {
         </Link>
 
         <article className={styles.product}>
-          <ProductGallery albumTitle="MM.Food" imgArr={imgArr} />
-          <ProductDetails />
-          <Tracklist tracklist={mockTracklist} />
+          <ProductGallery albumTitle={albumData.title} imgArr={imgArr} />
+          <ProductDetails
+            artist={albumData.artists[0].name}
+            artistImg={albumData.artists[0].thumbnail_url}
+            title={albumData.title}
+            year={albumData.year}
+            genre={albumData.genres[0]}
+            subgenres={albumData.styles}
+            lowestPrice={albumData.lowest_price}
+          />
+          <Tracklist tracklist={albumData.tracklist} />
         </article>
       </div>
     </div>

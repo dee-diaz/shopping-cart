@@ -4,24 +4,30 @@ import ProductMeta from '../ProductMeta/ProductMeta';
 import ProductDescription from '../ProductDescription/ProductDescription';
 import PriceRow from '../PriceRow/PriceRow';
 import ProductActions from '../ProductActions/ProductActions';
+import { getDisplayPrice } from '../../services/priceService';
 
-export default function ProductDetails() {
+export default function ProductDetails({
+  artist,
+  artistImg,
+  title,
+  year,
+  genre,
+  subgenres,
+  lowestPrice,
+}) {
+  const price = getDisplayPrice(lowestPrice);
   return (
     <div className={styles.productDetails} data-testid="product-details">
       <ArtistHeader
-        artistName="MF Doom"
-        artistImg="/images/mf-doom.jpg"
-        albumTitle="MM..Food"
+        artistName={artist}
+        artistImg={artistImg}
+        albumTitle={title}
       />
 
-      <ProductMeta
-        year="2004"
-        genre="Hip Hop"
-        subgenres={['Boom Bap', 'Jazzy Hip-Hop', 'Conscious']}
-      />
+      <ProductMeta year={year} genre={genre} subgenres={subgenres} />
 
       <ProductDescription />
-      <PriceRow price="$29" />
+      <PriceRow price={`$${price}`} />
       <ProductActions />
     </div>
   );
