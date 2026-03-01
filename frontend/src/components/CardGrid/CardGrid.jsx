@@ -6,15 +6,23 @@ import { AlbumsContext } from '../../contexts/AlbumsContext';
 import filterAlbums from '../../services/filterService';
 import { getDisplayPrice } from '../../services/priceService';
 
-export default function CardGrid({ albums, variant, priceRange }) {
+export default function CardGrid({ albums, variant, priceRange, type }) {
   const { sortType } = useContext(AlbumsContext);
   const sorted = sortAlbums(albums, sortType);
   let filtered;
   const hasFilter =
-    priceRange.min !== undefined || priceRange.max !== undefined;
+    priceRange?.min !== undefined || priceRange?.max !== undefined;
   if (hasFilter)
     filtered = filterAlbums(sorted, priceRange.min, priceRange.max);
-  const albumsToRender = filtered !== undefined ? filtered : sorted;
+  let albumsToRender;
+
+  if (type === 'recommendations') {
+    albumsToRender = albums;
+  } else if (filtered !== undefined) {
+    albumsToRender = filtered;
+  } else {
+    albumsToRender = sorted;
+  }
 
   return (
     <div
