@@ -1,19 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import styles from './SortDropdown.module.css';
+import { SORT_TYPE } from '../../constants/constants';
+import { AlbumsContext } from '../../contexts/AlbumsContext';
 
 export default function SortDropdown() {
-  const OPTIONS = {
-    POPULAR: 'Popular',
-    NEWEST: 'Newest',
-    PRICE_LOW_TO_HIGH: 'Price: Low → High',
-    PRICE_HIGH_TO_LOW: 'Price: High → Low',
-  };
-
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(OPTIONS.POPULAR);
+  const [selectedOption, setSelectedOption] = useState(SORT_TYPE.POPULAR);
   const dropdownRef = useRef(null);
+  const { setSortType } = useContext(AlbumsContext);
 
   function handleClick(option) {
+    setSortType(option);
     setSelectedOption(option);
     setIsOpen(false);
   }
@@ -64,7 +61,7 @@ export default function SortDropdown() {
           <div className={styles.label}>Sort by</div>
 
           <ul className={styles.list}>
-            {Object.values(OPTIONS).map((option, index) => (
+            {Object.values(SORT_TYPE).map((option, index) => (
               <button
                 key={index}
                 className={`${styles.option} ${
