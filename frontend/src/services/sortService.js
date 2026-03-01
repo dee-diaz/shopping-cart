@@ -1,4 +1,5 @@
 import { SORT_TYPE } from '../constants/constants';
+import { getDisplayPrice } from './priceService';
 
 // Type “Popular” sorts albums in alphabetical order by artist.
 export function sortAlbums(albums, sortType) {
@@ -13,8 +14,14 @@ export function sortAlbums(albums, sortType) {
     return albums.toSorted((a, b) => b.year - a.year);
 
   if (sortType === SORT_TYPE.PRICE_LOW_TO_HIGH)
-    return albums.toSorted((a, b) => a.lowest_price - b.lowest_price);
+    return albums.toSorted(
+      (a, b) =>
+        getDisplayPrice(a.lowest_price) - getDisplayPrice(b.lowest_price),
+    );
 
   if (sortType === SORT_TYPE.PRICE_HIGH_TO_LOW)
-    return albums.toSorted((a, b) => b.lowest_price - a.lowest_price);
+    return albums.toSorted(
+      (a, b) =>
+        getDisplayPrice(b.lowest_price) - getDisplayPrice(a.lowest_price),
+    );
 }
