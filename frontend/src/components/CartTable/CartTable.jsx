@@ -32,6 +32,7 @@ export default function CartList() {
         {cartItems.map((product) => (
           <CartItem
             key={product.id}
+            albumId={product.id}
             img={product.coverImgUrl}
             title={product.title}
             artist={product.artist}
@@ -46,12 +47,12 @@ export default function CartList() {
   );
 }
 
-export function CartItem({ img, title, artist, price, quantity }) {
+export function CartItem({ albumId, img, title, artist, price, quantity }) {
   const total = Number(price) * Number(quantity);
 
   return (
     <li className={styles.cartItem}>
-      <Link to="/product" className={styles.itemLink}>
+      <Link to={`/product/${albumId}`} className={styles.itemLink}>
         <img
           src={img || '/images/album-placeholder.webp'}
           alt={`${title} album cover`}
@@ -78,7 +79,7 @@ export function CartItem({ img, title, artist, price, quantity }) {
         role="group"
         aria-label={`Quantity for ${title}`}
       >
-        <QuantityInput />
+        <QuantityInput quantity={quantity} />
       </div>
 
       <p
