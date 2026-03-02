@@ -18,12 +18,16 @@ const trashIcon = (
 );
 
 export default function CartList() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useContext(CartContext);
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
+
+  function handleDelete(id) {
+    setCartItems((prev) => prev.filter((item) => item.id !== Number(id)));
+  }
 
   return (
     <>
@@ -44,6 +48,7 @@ export default function CartList() {
             artist={product.artist}
             price={product.price}
             quantity={product.quantity}
+            onClick={handleDelete}
           />
         ))}
       </ul>
@@ -53,7 +58,15 @@ export default function CartList() {
   );
 }
 
-export function CartItem({ albumId, img, title, artist, price, quantity }) {
+export function CartItem({
+  albumId,
+  img,
+  title,
+  artist,
+  price,
+  quantity,
+  onClick,
+}) {
   const total = Number(price) * Number(quantity);
 
   return (
@@ -99,7 +112,7 @@ export function CartItem({ albumId, img, title, artist, price, quantity }) {
         className={styles.removeBtn}
         icon={trashIcon}
         ariaLabel={`Remove ${title} from cart`}
-        onClick={() => console.log('Product removed')}
+        onClick={() => onClick(albumId)}
       />
     </li>
   );
