@@ -1,5 +1,5 @@
 import styles from './Card.module.css';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { useContext } from 'react';
 import { CartContext } from '../../contexts/CartContext';
 import AddToCartButton from '../Button/AddToCartButton';
@@ -13,6 +13,7 @@ export default function Card({
   coverImgUrl,
   price,
 }) {
+  const location = useLocation();
   const { cartItems, setCartItems } = useContext(CartContext);
   const altText = `${albumTitle} by ${albumArtist} album cover`;
 
@@ -40,7 +41,7 @@ export default function Card({
 
   return (
     <article className={styles.card}>
-      <Link to={`/product/${albumId}`}>
+      <Link to={`/product/${albumId}`} state={{ from: location }}>
         <img
           src={coverImgUrl || '/images/album-placeholder.webp'}
           alt={altText}

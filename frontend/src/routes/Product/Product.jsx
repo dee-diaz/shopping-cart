@@ -1,5 +1,5 @@
 import styles from './Product.module.css';
-import { Link, useParams } from 'react-router';
+import { Link, useParams, useLocation } from 'react-router';
 import ProductDetails from '../../components/ProductDetails/ProductDetails';
 import Tracklist from '../../components/Tracklist/Tracklist';
 import ProductGallery from '../../components/ProductGallery/ProductGallery';
@@ -13,6 +13,10 @@ export default function ProductPage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const { id } = useParams();
+
+  const location = useLocation();
+
+  const backTo = location.state?.from || '/';
 
   useEffect(() => {
     async function loadAlbum() {
@@ -44,7 +48,7 @@ export default function ProductPage() {
   return (
     <div className={styles.productPage}>
       <div className="container">
-        <Link className={styles.backBtn} to="/">
+        <Link className={styles.backBtn} to={backTo}>
           <svg
             width="20"
             height="20"

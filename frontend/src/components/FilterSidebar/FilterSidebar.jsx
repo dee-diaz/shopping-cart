@@ -1,5 +1,6 @@
 import styles from './FilterSidebar.module.css';
 import { useState, useEffect, useContext } from 'react';
+import { useSearchParams } from 'react-router';
 import Button from '../Button/Button';
 import {
   fetchGenreCatalog,
@@ -10,17 +11,27 @@ import { GENRES } from '../../data/catalog';
 
 function FilterSidebar({ onApply, priceRange }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
   const { setAlbums, setError, setLoading } = useContext(AlbumsContext);
+
+  const selectedGenres = searchParams.getAll('genre');
 
   function handleGenreChange(e) {
     const { value, checked } = e.target;
 
+    const params = new URLSearchParams(searchParams);
+    const genres = params.getAll('genre');
+
     if (checked) {
-      setSelectedGenres((prev) => [...prev, value]);
+      params.append('genre', value);
     } else {
-      setSelectedGenres((prev) => prev.filter((g) => g !== value));
+      params.delete('genre');
+      genres
+        .filter((g) => g !== value)
+        .forEach((g) => params.append('genre', g));
     }
+
+    setSearchParams(params);
   }
 
   function handlePriceFilterChange(min, max) {
@@ -29,6 +40,8 @@ function FilterSidebar({ onApply, priceRange }) {
   }
 
   useEffect(() => {
+    const selectedGenres = searchParams.getAll('genre');
+
     let loadAlbums;
     setLoading(true);
 
@@ -38,9 +51,7 @@ function FilterSidebar({ onApply, priceRange }) {
           const results = await Promise.all(
             selectedGenres.map((genre) => fetchGenreCatalog(genre)),
           );
-
-          const merged = results.flat();
-          setAlbums(merged);
+          setAlbums(results.flat());
         } catch (error) {
           setError(error);
         } finally {
@@ -59,9 +70,9 @@ function FilterSidebar({ onApply, priceRange }) {
         }
       };
     }
+
     loadAlbums();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedGenres]);
+  }, [searchParams, setAlbums, setError, setLoading]);
 
   return (
     <>
