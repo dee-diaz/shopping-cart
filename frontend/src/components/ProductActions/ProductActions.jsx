@@ -7,7 +7,7 @@ import AddToCartButton from '../Button/AddToCartButton';
 import { useContext, useState } from 'react';
 import { WishlistContext } from '../../contexts/WishlistContext';
 import { CartContext } from '../../contexts/CartContext';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { fetchAlbum } from '../../services/catalogService';
 import { getDisplayPrice } from '../../services/priceService';
 
@@ -37,14 +37,13 @@ const heartIconFilled = (
 );
 
 export default function ProductActions() {
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const { wishlistItems, setWishlistItems } = useContext(WishlistContext);
   const { cartItems, setCartItems } = useContext(CartContext);
   const isWishlisted = wishlistItems.find((item) => item.id === Number(id));
   const isInCart = cartItems.find((item) => item.id === Number(id));
-
-  console.log(quantity);
 
   async function handleAddToWishlist() {
     if (!isWishlisted) {
@@ -79,6 +78,7 @@ export default function ProductActions() {
         ),
       );
     }
+    navigate('/cart');
   }
 
   return (
