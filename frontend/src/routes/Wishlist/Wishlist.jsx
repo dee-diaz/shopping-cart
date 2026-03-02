@@ -2,9 +2,13 @@ import styles from './Wishlist.module.css';
 import CardGrid from '../../components/CardGrid/CardGrid';
 import Recommendations from '../../components/Recommendations/Recommendations';
 import EmptyState from '../../components/EmptyState/EmptyState';
+import { useContext } from 'react';
+import { WishlistContext } from '../../contexts/WishlistContext';
 
-export default function WishlistPage({ savedAlbums }) {
-  const isEmpty = !savedAlbums || savedAlbums.length === 0;
+export default function WishlistPage() {
+  const { wishlistItems } = useContext(WishlistContext);
+
+  const isEmpty = wishlistItems.length === 0;
 
   return (
     <section className={styles.wishlistPage}>
@@ -14,7 +18,7 @@ export default function WishlistPage({ savedAlbums }) {
         {isEmpty ? (
           <EmptyState text="You haven’t saved any items to your wishlist yet." />
         ) : (
-          <CardGrid albums={savedAlbums} variant="four-cols" />
+          <CardGrid albums={wishlistItems} variant="four-cols" />
         )}
 
         <Recommendations />
