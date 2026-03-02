@@ -19,7 +19,7 @@
 }
 
 .actions {
-  gap: 0.5rem;
+  gap: 1.5rem;
 }
 
 .iconBtn {
@@ -56,7 +56,7 @@
   }
 
   .actions {
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   .iconBtn:hover {
