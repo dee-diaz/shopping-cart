@@ -106,6 +106,6 @@ export default function AddToCartButton({
   }
 
   if (variant === ADD_BTN_VARIANT.PRIMARY) {
-    return <Button label="Add to cart" icon={cartIcon} onClick={handleClick} />;
+    return <Button label="Add to cart" icon={cartIcon} onClick={onClick} />;
   }
 }
