@@ -67,6 +67,7 @@ export function CartItem({
   quantity,
   onClick,
 }) {
+  const { setCartItems } = useContext(CartContext);
   const total = Number(price) * Number(quantity);
 
   return (
@@ -98,7 +99,27 @@ export function CartItem({
         role="group"
         aria-label={`Quantity for ${title}`}
       >
-        <QuantityInput quantity={quantity} />
+        <QuantityInput
+          quantity={quantity}
+          onDecrement={() =>
+            setCartItems((prev) =>
+              prev.map((item) =>
+                item.id === albumId
+                  ? { ...item, quantity: item.quantity - 1 }
+                  : item,
+              ),
+            )
+          }
+          onIncrement={() =>
+            setCartItems((prev) =>
+              prev.map((item) =>
+                item.id === albumId
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item,
+              ),
+            )
+          }
+        />
       </div>
 
       <p
