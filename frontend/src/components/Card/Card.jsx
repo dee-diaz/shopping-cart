@@ -16,6 +16,8 @@ export default function Card({
   const { cartItems, setCartItems } = useContext(CartContext);
   const altText = `${albumTitle} by ${albumArtist} album cover`;
 
+  const isAddedToCart = cartItems.find((item) => item.id === albumId);
+
   function handleClick() {
     if (cartItems.find((el) => el.id === albumId)) {
       const newArr = cartItems.filter((el) => el.id !== albumId);
@@ -62,6 +64,7 @@ export default function Card({
 
           <AddToCartButton
             variant={ADD_BTN_VARIANT.ICON}
+            isInCart={isAddedToCart}
             albumTitle={albumTitle}
             albumArtist={albumArtist}
             onClick={handleClick}

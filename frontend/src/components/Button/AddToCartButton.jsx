@@ -21,13 +21,13 @@ const cartIcon = (
 
 export default function AddToCartButton({
   variant,
+  isInCart,
   albumTitle,
   albumArtist,
   onClick,
 }) {
   const [loading, setLoading] = useState(false);
-  const [isAdded, setIsAdded] = useState(false);
-  const icon = isAdded ? (
+  const icon = isInCart ? (
     <svg
       width="24"
       height="24"
@@ -88,7 +88,6 @@ export default function AddToCartButton({
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setIsAdded((prev) => !prev);
       onClick();
     }, 400);
   }
