@@ -1,17 +1,6 @@
 import styles from './QuantityInput.module.css';
-import { useState } from 'react';
 
-export default function QuantityInput() {
-  const [quantity, setQuantity] = useState(1);
-
-  function increment() {
-    setQuantity((prev) => prev + 1);
-  }
-
-  function decrement() {
-    setQuantity((prev) => prev - 1);
-  }
-
+export default function QuantityInput({ quantity, onIncrement, onDecrement }) {
   return (
     <div className={styles.quantity} role="group" aria-label="Quantity">
       <button
@@ -19,7 +8,7 @@ export default function QuantityInput() {
         aria-label="Decrease quantity"
         aria-controls="quantity"
         disabled={quantity === 1}
-        onClick={decrement}
+        onClick={onDecrement}
       >
         <svg
           width="20"
@@ -41,7 +30,7 @@ export default function QuantityInput() {
         aria-label="Increase quantity"
         aria-controls="quantity"
         disabled={quantity === 10}
-        onClick={increment}
+        onClick={onIncrement}
       >
         <svg
           width="20"

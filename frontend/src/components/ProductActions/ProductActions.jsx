@@ -4,11 +4,12 @@ import Button from '../../components/Button/Button';
 import IconButton from '../../components/Button/IconButton';
 import { ADD_BTN_VARIANT } from '../../constants/constants';
 import AddToCartButton from '../Button/AddToCartButton';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { WishlistContext } from '../../contexts/WishlistContext';
 import { CartContext } from '../../contexts/CartContext';
 import { useParams } from 'react-router';
 import { fetchAlbum } from '../../services/catalogService';
+import { getDisplayPrice } from '../../services/priceService';
 
 const heartIcon = (
   <svg
@@ -36,10 +37,14 @@ const heartIconFilled = (
 );
 
 export default function ProductActions() {
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const { wishlistItems, setWishlistItems } = useContext(WishlistContext);
-  // const { setCartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useContext(CartContext);
   const isWishlisted = wishlistItems.find((item) => item.id === Number(id));
+  const isInCart = cartItems.find((item) => item.id === Number(id));
+
+  console.log(quantity);
 
   async function handleAddToWishlist() {
     if (!isWishlisted) {
@@ -51,13 +56,42 @@ export default function ProductActions() {
     }
   }
 
+  async function handleAddToCart() {
+    if (!isInCart) {
+      const album = await fetchAlbum(id);
+      const cartObj = {
+        id: album.id,
+        genre: album.genres[0],
+        title: album.title,
+        artist: album.artists[0].name,
+        coverImgUrl: album.images[0].uri,
+        price: getDisplayPrice(album.lowest_price),
+        quantity,
+      };
+
+      setCartItems((prev) => [...prev, cartObj]);
+    } else {
+      setCartItems((prev) =>
+        prev.map((item) =>
+          item.id === Number(id)
+            ? { ...item, quantity: item.quantity + quantity }
+            : item,
+        ),
+      );
+    }
+  }
+
   return (
     <div role="group" aria-label="Product actions" className={styles.actions}>
-      <QuantityInput />
+      <QuantityInput
+        quantity={quantity}
+        onDecrement={() => setQuantity((prev) => prev - 1)}
+        onIncrement={() => setQuantity((prev) => prev + 1)}
+      />
       <div className={styles.wrapper}>
         <AddToCartButton
           variant={ADD_BTN_VARIANT.PRIMARY}
-          onClick={() => console.log('Added to cart')}
+          onClick={handleAddToCart}
         />
 
         <IconButton
