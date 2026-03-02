@@ -1,7 +1,11 @@
-.cardGrid {
-  width: 100%;
+.cardGrid,
+.cardGridFour {
   display: grid;
   gap: 2rem;
+}
+
+.cardGrid {
+  width: 100%;
   margin-top: 2rem;
 
   > div {
@@ -17,7 +21,6 @@
   }
 
   .cardGridFour {
-    display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
 
