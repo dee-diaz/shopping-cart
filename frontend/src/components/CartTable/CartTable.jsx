@@ -19,6 +19,12 @@ const trashIcon = (
 
 export default function CartList() {
   const { cartItems } = useContext(CartContext);
+
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+
   return (
     <>
       <div className={styles.cartHeader} aria-hidden="true">
@@ -42,7 +48,7 @@ export default function CartList() {
         ))}
       </ul>
 
-      <Summary />
+      <Summary total={total} />
     </>
   );
 }
@@ -86,7 +92,7 @@ export function CartItem({ albumId, img, title, artist, price, quantity }) {
         className={styles.itemTotal}
         aria-label={`Total for ${title}: ${total} dollars`}
       >
-        ${total}.00
+        ${total}
       </p>
 
       <IconButton
@@ -99,7 +105,7 @@ export function CartItem({ albumId, img, title, artist, price, quantity }) {
   );
 }
 
-export function Summary() {
+export function Summary({ total }) {
   return (
     <section aria-labelledby="summary-title" className={styles.cartSummary}>
       <h2 id="summary-title" className={styles.srOnly}>
@@ -107,7 +113,7 @@ export function Summary() {
       </h2>
       <div className={styles.cartTotalRow}>
         <span>Total</span>
-        <strong aria-label="Total: 53 dollars">$53.00</strong>
+        <strong aria-label={`Total: $${total}`}>{`$${total}`}</strong>
       </div>
       <p className={styles.cartShippingNote}>
         Shipping and taxes calculated at checkout
