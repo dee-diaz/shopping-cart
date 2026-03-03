@@ -1,5 +1,6 @@
 .container {
   position: relative;
+  min-height: 50vh;
 }
 
 .heading {
@@ -14,6 +15,10 @@
 }
 
 @media (min-width: 992px) {
+  .container {
+    min-height: 72vh;
+  }
+
   .heading {
     font-size: 2rem;
     margin-block: 2.5rem;
