@@ -9,14 +9,11 @@ import FilterSidebar, {
 } from './FilterSidebar';
 import styles from './FilterSidebar.module.css';
 import ShopProviders from '../../contexts/ShopProviders';
+import { renderWithProviders } from '../../test-utils';
 
 describe('FilterSidebar', () => {
   it('is present in the document', () => {
-    render(
-      <ShopProviders>
-        <FilterSidebar />
-      </ShopProviders>,
-    );
+    renderWithProviders(<FilterSidebar onApply={vi.fn()} priceRange={{}} />);
     const sidebar = screen.getByRole('region', {
       name: 'Filters',
     });
@@ -25,11 +22,7 @@ describe('FilterSidebar', () => {
 
   it('opens sidebar when filter icon is clicked', async () => {
     const user = userEvent.setup();
-    render(
-      <ShopProviders>
-        <FilterSidebar />
-      </ShopProviders>,
-    );
+    renderWithProviders(<FilterSidebar onApply={vi.fn()} priceRange={{}} />);
     const sidebar = screen.getByRole('region', { name: 'Filters' });
 
     await user.click(screen.getByRole('button', { name: /open/i }));
@@ -39,17 +32,28 @@ describe('FilterSidebar', () => {
 
   it('close sidebar when close icon is clicked', async () => {
     const user = userEvent.setup();
-    render(
-      <ShopProviders>
-        <FilterSidebar />
-      </ShopProviders>,
-    );
+    renderWithProviders(<FilterSidebar onApply={vi.fn()} priceRange={{}} />);
     const sidebar = screen.getByRole('region', { name: 'Filters' });
 
     await user.click(screen.getByRole('button', { name: /open/i }));
     await user.click(screen.getByRole('button', { name: /close/i }));
 
     expect(sidebar).not.toHaveClass(styles.open);
+  });
+
+  it('calls onApply from PriceFilter', async () => {
+    const user = userEvent.setup();
+    const mockOnApply = vi.fn();
+
+    renderWithProviders(
+      <FilterSidebar onApply={mockOnApply} priceRange={{}} />,
+    );
+
+    await user.type(screen.getByRole('spinbutton', { name: /minimum/i }), '10');
+
+    await user.click(screen.getByRole('button', { name: /apply/i }));
+
+    expect(mockOnApply).toHaveBeenCalled();
   });
 });
 
@@ -95,7 +99,7 @@ describe('PriceFilter', () => {
     await user.type(screen.getByRole('spinbutton', { name: /maximum/i }), '50');
     await user.click(screen.getByRole('button', { name: /apply/i }));
 
-    expect(mockOnApply).toHaveBeenCalledWith('10', '50');
+    expect(mockOnApply).toHaveBeenCalledWith(10, 50);
   });
 });
 
