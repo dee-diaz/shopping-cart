@@ -1,5 +1,5 @@
 import styles from './FilterSidebar.module.css';
-import { useState, useEffect, useSearchParams } from 'react';
+import { useState, useEffect } from 'react';
 import { useGenreFilters } from '../../hooks/useGenreFilters';
 import Button from '../Button/Button';
 import { GENRES } from '../../data/catalog';
