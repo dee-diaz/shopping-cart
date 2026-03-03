@@ -1,78 +1,20 @@
 import styles from './FilterSidebar.module.css';
-import { useState, useEffect, useContext } from 'react';
-import { useSearchParams } from 'react-router';
+import { useState, useEffect, useSearchParams } from 'react';
+import { useGenreFilters } from '../../hooks/useGenreFilters';
 import Button from '../Button/Button';
-import {
-  fetchGenreCatalog,
-  fetchFeatured,
-} from '../../services/catalogService';
-import { AlbumsContext } from '../../contexts/AlbumsContext';
 import { GENRES } from '../../data/catalog';
+import { useLoadAlbums } from '../../hooks/useLoadAlbums';
 
 function FilterSidebar({ onApply, priceRange }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { setAlbums, setError, setLoading } = useContext(AlbumsContext);
-
-  const selectedGenres = searchParams.getAll('genre');
-
-  function handleGenreChange(e) {
-    const { value, checked } = e.target;
-
-    const params = new URLSearchParams(searchParams);
-    const genres = params.getAll('genre');
-
-    if (checked) {
-      params.append('genre', value);
-    } else {
-      params.delete('genre');
-      genres
-        .filter((g) => g !== value)
-        .forEach((g) => params.append('genre', g));
-    }
-
-    setSearchParams(params);
-  }
+  const { searchParams, selectedGenres, toggleGenre } = useGenreFilters();
 
   function handlePriceFilterChange(min, max) {
     onApply(min, max);
     setIsOpen(false);
   }
 
-  useEffect(() => {
-    const selectedGenres = searchParams.getAll('genre');
-
-    let loadAlbums;
-    setLoading(true);
-
-    if (selectedGenres.length !== 0) {
-      loadAlbums = async () => {
-        try {
-          const results = await Promise.all(
-            selectedGenres.map((genre) => fetchGenreCatalog(genre)),
-          );
-          setAlbums(results.flat());
-        } catch (error) {
-          setError(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-    } else {
-      loadAlbums = async () => {
-        try {
-          const data = await fetchFeatured();
-          setAlbums(data);
-        } catch (error) {
-          setError(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-    }
-
-    loadAlbums();
-  }, [searchParams, setAlbums, setError, setLoading]);
+  useLoadAlbums(searchParams);
 
   return (
     <>
@@ -85,7 +27,7 @@ function FilterSidebar({ onApply, priceRange }) {
         <ModalCloseButton onClick={() => setIsOpen(false)} />
         <GenreFilter
           selectedGenres={selectedGenres}
-          onChange={handleGenreChange}
+          onChange={(e) => toggleGenre(e.target.value, e.target.checked)}
         />
         <PriceFilter
           appliedValue={priceRange}
