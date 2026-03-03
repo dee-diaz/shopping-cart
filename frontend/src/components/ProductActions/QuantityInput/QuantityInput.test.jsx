@@ -1,72 +1,118 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import QuantityInput from './QuantityInput';
 
 describe('QuantityInput', () => {
   it('is present in the document', () => {
-    render(<QuantityInput />);
+    render(
+      <QuantityInput
+        quantity={1}
+        onIncrement={vi.fn()}
+        onDecrement={vi.fn()}
+      />,
+    );
     const quantityInput = screen.getByRole('group', { name: 'Quantity' });
     expect(quantityInput).toBeInTheDocument();
   });
 
   it('renders two buttons', () => {
-    render(<QuantityInput />);
+    render(
+      <QuantityInput
+        quantity={1}
+        onIncrement={vi.fn()}
+        onDecrement={vi.fn()}
+      />,
+    );
     const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(2);
   });
 
-  it('increments value on clicking plus button', async () => {
-    const user = userEvent.setup();
+  it('renders provided quantity', () => {
+    render(
+      <QuantityInput
+        quantity={3}
+        onDecrement={vi.fn()}
+        onIncrement={vi.fn()}
+      />,
+    );
 
-    render(<QuantityInput />);
-    const plusBtn = screen.getByRole('button', { name: /increase/i });
-    const value = screen.getByText('1');
-
-    await user.click(plusBtn);
-
-    expect(value).toHaveTextContent('2');
+    expect(screen.getByText('3')).toBeInTheDocument();
   });
 
-  it('decrements value on clicking minus button', async () => {
-    const user = userEvent.setup();
-
-    render(<QuantityInput />);
-    const plusBtn = screen.getByRole('button', { name: /increase/i });
+  it('renders minus button disabled when 1 is passed', () => {
+    render(
+      <QuantityInput
+        quantity={1}
+        onDecrement={vi.fn()}
+        onIncrement={vi.fn()}
+      />,
+    );
     const minusBtn = screen.getByRole('button', { name: /decrease/i });
-    const value = screen.getByText('1');
-
-    await user.click(plusBtn);
-    await user.click(minusBtn);
-
-    expect(value).toHaveTextContent('1');
-  });
-
-  it("renders minus button disabled and doesn' decrement below 1", async () => {
-    const user = userEvent.setup();
-
-    render(<QuantityInput />);
-    const minusBtn = screen.getByRole('button', { name: /decrease/i });
-    const value = screen.getByText('1');
-
-    await user.click(minusBtn);
 
     expect(minusBtn).toBeDisabled();
-    expect(value).toHaveTextContent('1');
   });
 
-  it("renders plus button disabled and doesn' increment above 10", async () => {
-    const user = userEvent.setup();
-
-    render(<QuantityInput />);
+  it('renders plus button disabled when 10 is passed', () => {
+    render(
+      <QuantityInput
+        quantity={10}
+        onDecrement={vi.fn()}
+        onIncrement={vi.fn()}
+      />,
+    );
     const plusBtn = screen.getByRole('button', { name: /increase/i });
-    const value = screen.getByText('1');
-
-    for (let i = 0; i < 10; i++) {
-      await user.click(plusBtn);
-    }
 
     expect(plusBtn).toBeDisabled();
-    expect(value).toHaveTextContent('10');
+  });
+
+  it('enables both buttons when quantity is between min and max', () => {
+    render(
+      <QuantityInput
+        quantity={5}
+        onDecrement={vi.fn()}
+        onIncrement={vi.fn()}
+      />,
+    );
+
+    const minusBtn = screen.getByRole('button', { name: /decrease/i });
+    const plusBtn = screen.getByRole('button', { name: /increase/i });
+
+    expect(minusBtn).not.toBeDisabled();
+    expect(plusBtn).not.toBeDisabled();
+  });
+
+  it('calls onIncrement when plus button is clicked', async () => {
+    const onIncrement = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <QuantityInput
+        quantity={1}
+        onIncrement={onIncrement}
+        onDecrement={vi.fn()}
+      />,
+    );
+
+    await user.click(screen.getByRole('button', { name: /increase/i }));
+
+    expect(onIncrement).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onDecrement when minus button is clicked', async () => {
+    const onDecrement = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <QuantityInput
+        quantity={2}
+        onIncrement={vi.fn()}
+        onDecrement={onDecrement}
+      />,
+    );
+
+    await user.click(screen.getByRole('button', { name: /decrease/i }));
+
+    expect(onDecrement).toHaveBeenCalledTimes(1);
   });
 });
