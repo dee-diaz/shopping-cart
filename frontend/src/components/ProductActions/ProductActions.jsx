@@ -1,15 +1,9 @@
 import styles from './ProductActions.module.css';
 import QuantityInput from './QuantityInput/QuantityInput';
-import Button from '../../components/Button/Button';
 import IconButton from '../../components/Button/IconButton';
 import { ADD_BTN_VARIANT } from '../../constants/constants';
 import AddToCartButton from '../Button/AddToCartButton';
-import { useContext, useState } from 'react';
-import { WishlistContext } from '../../contexts/WishlistContext';
-import { CartContext } from '../../contexts/CartContext';
-import { useParams, useNavigate } from 'react-router';
-import { fetchAlbum } from '../../services/catalogService';
-import { getDisplayPrice } from '../../services/priceService';
+import { useProductActions } from '../../hooks/useProductActions';
 
 const heartIcon = (
   <svg
@@ -37,49 +31,13 @@ const heartIconFilled = (
 );
 
 export default function ProductActions() {
-  const navigate = useNavigate();
-  const [quantity, setQuantity] = useState(1);
-  const { id } = useParams();
-  const { wishlistItems, setWishlistItems } = useContext(WishlistContext);
-  const { cartItems, setCartItems } = useContext(CartContext);
-  const isWishlisted = wishlistItems.find((item) => item.id === Number(id));
-  const isInCart = cartItems.find((item) => item.id === Number(id));
-
-  async function handleAddToWishlist() {
-    if (!isWishlisted) {
-      const album = await fetchAlbum(id);
-      setWishlistItems((prev) => [...prev, album]);
-    } else {
-      const updatedArr = wishlistItems.filter((item) => item.id !== Number(id));
-      setWishlistItems(updatedArr);
-    }
-  }
-
-  async function handleAddToCart() {
-    if (!isInCart) {
-      const album = await fetchAlbum(id);
-      const cartObj = {
-        id: album.id,
-        genre: album.genres[0],
-        title: album.title,
-        artist: album.artists[0].name,
-        coverImgUrl: album.images[0].uri,
-        price: getDisplayPrice(album.lowest_price),
-        quantity,
-      };
-
-      setCartItems((prev) => [...prev, cartObj]);
-    } else {
-      setCartItems((prev) =>
-        prev.map((item) =>
-          item.id === Number(id)
-            ? { ...item, quantity: item.quantity + quantity }
-            : item,
-        ),
-      );
-    }
-    navigate('/cart');
-  }
+  const {
+    isWishlisted,
+    quantity,
+    handleAddToWishlist,
+    handleAddToCart,
+    setQuantity,
+  } = useProductActions();
 
   return (
     <div role="group" aria-label="Product actions" className={styles.actions}>
