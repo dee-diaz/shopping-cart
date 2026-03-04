@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router';
 import { CartContext } from './contexts/CartContext';
 import { AlbumsContext } from './contexts/AlbumsContext';
 import { WishlistContext } from './contexts/WishlistContext';
+import { SORT_TYPE } from './constants/constants';
 
 export function renderWithProviders(
   ui,
@@ -13,6 +14,7 @@ export function renderWithProviders(
     albums = [],
     loading = false,
     error = null,
+    sortType = SORT_TYPE.POPULAR,
   } = {},
 ) {
   return render(
@@ -21,6 +23,7 @@ export function renderWithProviders(
         albums,
         loading,
         error,
+        sortType,
         setLoading: vi.fn(),
         setAlbums: vi.fn(),
         setError: vi.fn(),

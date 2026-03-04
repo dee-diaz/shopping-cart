@@ -6,7 +6,7 @@ import { AlbumsContext } from '../../contexts/AlbumsContext';
 import filterAlbums from '../../services/filterService';
 import { getDisplayPrice } from '../../services/priceService';
 
-export default function CardGrid({ albums, variant, priceRange, type }) {
+export default function CardGrid({ albums = [], variant, priceRange, type }) {
   const { sortType } = useContext(AlbumsContext);
   const sorted = sortAlbums(albums, sortType);
   let filtered;
