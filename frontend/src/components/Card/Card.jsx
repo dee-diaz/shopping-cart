@@ -57,7 +57,7 @@ export default function Card({
         </Link>
         <div className={styles.actions}>
           <span className={styles.price} aria-label={`Price: $${price}`}>
-            {`${price}`}
+            {`$${price}`}
           </span>
           <span className={styles.divider} aria-hidden="true">
             |
