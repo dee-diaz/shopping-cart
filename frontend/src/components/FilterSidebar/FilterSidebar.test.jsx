@@ -8,7 +8,6 @@ import FilterSidebar, {
   ModalCloseButton,
 } from './FilterSidebar';
 import styles from './FilterSidebar.module.css';
-import ShopProviders from '../../contexts/ShopProviders';
 import { renderWithProviders } from '../../test-utils';
 
 describe('FilterSidebar', () => {
