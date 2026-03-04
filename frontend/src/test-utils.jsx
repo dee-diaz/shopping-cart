@@ -15,6 +15,7 @@ export function renderWithProviders(
     loading = false,
     error = null,
     sortType = SORT_TYPE.POPULAR,
+    setSortType = vi.fn(),
   } = {},
 ) {
   return render(
@@ -24,6 +25,7 @@ export function renderWithProviders(
         loading,
         error,
         sortType,
+        setSortType,
         setLoading: vi.fn(),
         setAlbums: vi.fn(),
         setError: vi.fn(),

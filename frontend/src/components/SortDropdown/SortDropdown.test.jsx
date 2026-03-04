@@ -1,12 +1,14 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SortDropdown from './SortDropdown';
+import { renderWithProviders } from '../../test-utils';
+import { SORT_TYPE } from '../../constants/constants';
 
 describe('SortDropdown', () => {
   describe('Dropdown toggle button', () => {
     it('renders the button and displays default option', () => {
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       expect(button).toBeInTheDocument();
@@ -14,7 +16,7 @@ describe('SortDropdown', () => {
     });
 
     it('button has correct aria-expanded value', () => {
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
       expect(button).toHaveAttribute('aria-expanded', 'false');
     });
@@ -22,7 +24,7 @@ describe('SortDropdown', () => {
     it('shows the dropdown content on click', async () => {
       const user = userEvent.setup();
 
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       await user.click(button);
@@ -35,7 +37,7 @@ describe('SortDropdown', () => {
     it('closes dropdown on second click', async () => {
       const user = userEvent.setup();
 
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       await user.click(button);
@@ -50,7 +52,7 @@ describe('SortDropdown', () => {
     it('closes dropdown on outside click', async () => {
       const user = userEvent.setup();
 
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       await user.click(button);
@@ -63,14 +65,14 @@ describe('SortDropdown', () => {
 
   describe('Dropdown menu', () => {
     it('does not render menu when closed', () => {
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
     });
 
     it('selects option and closes dropdown menu', async () => {
       const user = userEvent.setup();
 
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       await user.click(button);
@@ -84,14 +86,33 @@ describe('SortDropdown', () => {
 
     it('list contains 4 sorting options', async () => {
       const user = userEvent.setup();
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       await user.click(button);
-      const list = screen.getByRole('list');
+      const list = screen.getByRole('listbox');
       const items = within(list).getAllByRole('option');
 
       expect(items).toHaveLength(4);
+    });
+
+    it('calls setSortType when option is selected', async () => {
+      const user = userEvent.setup();
+      const setSortType = vi.fn();
+
+      renderWithProviders(<SortDropdown />, { setSortType });
+
+      const trigger = screen.getByRole('button', { name: /sort options/i });
+
+      await user.click(trigger);
+
+      const listbox = screen.getByRole('listbox');
+
+      const option = within(listbox).getByText(SORT_TYPE.NEWEST);
+
+      await user.click(option);
+
+      expect(setSortType).toHaveBeenCalledWith(SORT_TYPE.NEWEST);
     });
   });
 
@@ -99,7 +120,7 @@ describe('SortDropdown', () => {
     it('closes dropdown on Escape key', async () => {
       const user = userEvent.setup();
 
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       await user.click(button);
@@ -112,7 +133,7 @@ describe('SortDropdown', () => {
     it('marks selected option with aria-selected', async () => {
       const user = userEvent.setup();
 
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       await user.click(button);
@@ -124,7 +145,7 @@ describe('SortDropdown', () => {
     it('shows checkmark icon for selected option', async () => {
       const user = userEvent.setup();
 
-      render(<SortDropdown />);
+      renderWithProviders(<SortDropdown />);
       const button = screen.getByRole('button', { name: /sort/i });
 
       await user.click(button);
