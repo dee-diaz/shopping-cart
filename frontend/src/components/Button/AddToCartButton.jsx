@@ -84,6 +84,10 @@ export default function AddToCartButton({
     </svg>
   );
 
+  const ariaLabelText = isInCart
+    ? `Remove ${albumTitle} by ${albumArtist} from cart`
+    : `Add ${albumTitle} by ${albumArtist} to cart`;
+
   function handleClick() {
     setLoading(true);
     setTimeout(() => {
@@ -96,7 +100,7 @@ export default function AddToCartButton({
     return (
       <button
         className={styles.btnAddToCart}
-        aria-label={`Add ${albumTitle} by ${albumArtist} to cart`}
+        aria-label={ariaLabelText}
         onClick={handleClick}
       >
         {loading ? <div className={styles.loader}></div> : icon}
