@@ -1,34 +1,22 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { screen } from '@testing-library/react';
 import CartButton from './CartButton';
+import { renderWithProviders } from '../../test-utils';
 
 describe('CartButton', () => {
-  it('is present in the document', () => {
-    render(<CartButton />, { wrapper: MemoryRouter });
-    const cartButton = screen.getByRole('link', { name: /Go to cart/i });
-    expect(cartButton).toBeInTheDocument();
-  });
-
   it('renders count badge with correct value', () => {
-    render(<CartButton count="2" />, { wrapper: MemoryRouter });
+    renderWithProviders(<CartButton />, { cartItems: ['01', '02'] });
     const cartButton = screen.getByRole('link', { name: /Go to cart/i });
 
-    expect(within(cartButton).getByText('2')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /2 items/i })).toBeInTheDocument();
+    expect(cartButton).toHaveTextContent('2');
+    expect(cartButton).toHaveAccessibleName('Go to cart, 2 items');
   });
 
-  it("doesn't render count badge if 0 count is passed", () => {
-    render(<CartButton count="0" />, { wrapper: MemoryRouter });
+  it("doesn't render count badge if cart is empty", () => {
+    renderWithProviders(<CartButton />, { cartItems: [] });
     const cartButton = screen.getByRole('link', { name: /Go to cart/i });
 
-    expect(within(cartButton).queryByText(/^\d+$/)).not.toBeInTheDocument();
-  });
-
-  it("doesn't render count badge if no count is passed", () => {
-    render(<CartButton />, { wrapper: MemoryRouter });
-    const cartButton = screen.getByRole('link', { name: /Go to cart/i });
-
-    expect(within(cartButton).queryByText(/^\d+$/)).not.toBeInTheDocument();
+    expect(cartButton).not.toHaveTextContent(/\d/);
+    expect(cartButton).toHaveAccessibleName('Go to cart, cart is empty');
   });
 });
