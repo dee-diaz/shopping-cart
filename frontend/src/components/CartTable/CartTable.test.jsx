@@ -111,9 +111,9 @@ describe('CartItem', () => {
 });
 
 describe('Summary', () => {
-  it('is present in the document', () => {
+  it('displays correct total price', () => {
     renderWithProviders(<Summary total={59} />);
     const summary = screen.getByRole('region', { name: /order summary/i });
-    expect(summary).toBeInTheDocument();
+    expect(summary).toHaveTextContent('$59');
   });
 });
