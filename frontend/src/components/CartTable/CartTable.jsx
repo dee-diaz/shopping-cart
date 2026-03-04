@@ -91,7 +91,7 @@ export function CartItem({
       </Link>
 
       <p className={styles.desktopPrice} aria-label={`Price: ${price} dollars`}>
-        ${price}.00
+        ${price}
       </p>
 
       <div
