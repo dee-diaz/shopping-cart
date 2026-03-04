@@ -1,59 +1,81 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
-import Wishlist from './Wishlist';
+import { screen } from '@testing-library/react';
+import WishlistPage from './Wishlist';
+import { renderWithProviders } from '../../test-utils';
 
-const mockSavedAlbums = [
+const mockAlbums = [
   {
-    id: 1,
-    title: 'Ritual Of Battle',
-    artist: 'Jedi Mind Tricks',
-    price: '26',
-    coverImgUrl:
-      'https://i.discogs.com/my_Gd5nsGzyb6Dm5LgWor0duRe9Fbx0HFHPPIQwBAr8/rs:fit/g:sm/q:90/h:597/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwOTE0/MjAtMTY0MTY4MzA3/OS02NTc1LmpwZWc.jpeg',
+    id: 101,
+    genres: ['Hip-Hop'],
+    title: 'The Infamous',
+    artists: [{ name: 'Mobb Deep' }],
+    images: [
+      {
+        uri: 'https://example.com/infamous.jpg',
+      },
+    ],
+    lowest_price: 24.99,
   },
   {
-    id: 2,
-    title: 'Madvillainy',
-    artist: 'Madvillain',
-    price: '29',
-    coverImgUrl: '',
+    id: 102,
+    genres: ['Electronic'],
+    title: 'Mezzanine',
+    artists: [{ name: 'Massive Attack' }],
+    images: [
+      {
+        uri: 'https://example.com/mezzanine.jpg',
+      },
+    ],
+    lowest_price: 29.5,
+  },
+  {
+    id: 103,
+    genres: ['Rock'],
+    title: 'Abbey Road',
+    artists: [{ name: 'The Beatles' }],
+    images: [
+      {
+        uri: 'https://example.com/abbey-road.jpg',
+      },
+    ],
+    lowest_price: 35,
   },
 ];
 
-describe('Wishlist', () => {
+describe('WishlistPage', () => {
   it('renders heading', () => {
-    render(<Wishlist savedAlbums={mockSavedAlbums} />, {
-      wrapper: MemoryRouter,
-    });
+    renderWithProviders(<WishlistPage />, { wishlistItems: mockAlbums });
     const heading = screen.getByRole('heading', { name: /Wishlist/i });
     expect(heading).toBeInTheDocument();
   });
 
-  it('renders empty state when wishlist array is empty', () => {
-    render(<Wishlist savedAlbums={[]} />, { wrapper: MemoryRouter });
-    const emptyState = screen.getByRole('status');
-    expect(emptyState).toBeInTheDocument();
+  it('renders wishlist albums', () => {
+    renderWithProviders(<WishlistPage />, { wishlistItems: mockAlbums });
+
+    const cards = screen.getAllByRole('article');
+
+    expect(cards.length).toBeGreaterThan(0);
   });
 
-  it('renders empty state when no prop is passed', () => {
-    render(<Wishlist />, { wrapper: MemoryRouter });
+  it('renders empty state when wishlist array is empty', () => {
+    renderWithProviders(<WishlistPage />, { wishlistItems: [] });
     const emptyState = screen.getByRole('status');
     expect(emptyState).toBeInTheDocument();
+    expect(emptyState).toHaveTextContent(
+      'You haven’t saved any items to your wishlist yet.',
+    );
   });
 
   it('renders recommendations', () => {
-    render(<Wishlist savedAlbums={mockSavedAlbums} />, {
-      wrapper: MemoryRouter,
+    renderWithProviders(<WishlistPage />);
+    const recommendations = screen.getByRole('region', {
+      name: /Maybe you’d like/i,
     });
-    const recommendations = screen.getByRole('region');
     expect(recommendations).toBeInTheDocument();
   });
 
-  it('renders 2 card grids', () => {
-    render(<Wishlist savedAlbums={mockSavedAlbums} />, {
-      wrapper: MemoryRouter,
-    });
+  it('renders wishlist items and recommendations grids', () => {
+    renderWithProviders(<WishlistPage />, { wishlistItems: mockAlbums });
     const cardGrids = screen.getAllByTestId('card-grid');
     expect(cardGrids).toHaveLength(2);
   });
