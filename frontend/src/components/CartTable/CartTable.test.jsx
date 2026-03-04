@@ -1,9 +1,10 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { describe, it, expect, vi } from 'vitest';
+import { screen, within } from '@testing-library/react';
 import CartList, { CartItem, Summary } from './CartTable';
+import { renderWithProviders } from '../../test-utils';
+import userEvent from '@testing-library/user-event';
 
-const mockCartProducts = [
+const mockCartItems = [
   {
     id: 1,
     title: 'Ritual Of Battle',
@@ -26,60 +27,58 @@ const mockCartProducts = [
 
 describe('CartList', () => {
   it('is present in the document', () => {
-    render(<CartList cartProducts={mockCartProducts} />, {
-      wrapper: MemoryRouter,
-    });
+    renderWithProviders(<CartList />, { cartItems: mockCartItems });
     const cartList = screen.getByRole('list', { name: /Cart items/i });
     expect(cartList).toBeInTheDocument();
   });
 
   it('renders the correct number of cart items', () => {
-    render(<CartList cartProducts={mockCartProducts} />, {
-      wrapper: MemoryRouter,
-    });
-
-    const cartItems = screen.getAllByRole('listitem');
-    expect(cartItems).toHaveLength(2);
+    renderWithProviders(<CartList />, { cartItems: mockCartItems });
+    const list = screen.getByRole('list', { name: /cart items/i });
+    const items = within(list).getAllByRole('listitem');
+    expect(items).toHaveLength(2);
   });
 
   it('renders order summary', () => {
-    render(<CartList cartProducts={mockCartProducts} />, {
-      wrapper: MemoryRouter,
-    });
-
+    renderWithProviders(<CartList />, { cartItems: mockCartItems });
     const summary = screen.getByRole('region', { name: /order summary/i });
     expect(summary).toBeInTheDocument();
   });
 });
 
 describe('CartItem', () => {
+  function renderCartItem(overrides = {}) {
+    return renderWithProviders(
+      <CartItem
+        albumId={mockCartItems[0].id}
+        img={mockCartItems[0].coverImgUrl}
+        title={mockCartItems[0].title}
+        artist={mockCartItems[0].artist}
+        price={mockCartItems[0].price}
+        quantity={mockCartItems[0].quantity}
+        onClick={vi.fn()}
+        {...overrides}
+      />,
+    );
+  }
+
   it('is present in the document', () => {
-    render(<CartItem />, { wrapper: MemoryRouter });
+    renderCartItem();
     const cartItem = screen.getByRole('listitem');
     expect(cartItem).toBeInTheDocument();
   });
 
   it('renders cart item image correctly', () => {
-    const data = mockCartProducts[0];
-    render(
-      <CartItem
-        img={data.coverImgUrl}
-        title={data.title}
-        artist={data.artist}
-        price={data.price}
-        quantity={data.quantity}
-      />,
-      { wrapper: MemoryRouter },
-    );
+    renderCartItem();
 
     const img = screen.getByRole('img');
 
-    expect(img).toHaveAttribute('src', data.coverImgUrl);
+    expect(img).toHaveAttribute('src', mockCartItems[0].coverImgUrl);
     expect(img).toHaveAccessibleName('Ritual Of Battle album cover');
   });
 
   it('renders album placeholder if no image is passed', () => {
-    render(<CartItem />, { wrapper: MemoryRouter });
+    renderCartItem({ img: undefined });
 
     const img = screen.getByRole('img');
 
@@ -87,28 +86,33 @@ describe('CartItem', () => {
   });
 
   it('renders cart item data', () => {
-    const data = mockCartProducts[0];
-    render(
-      <CartItem
-        img={data.coverImgUrl}
-        title={data.title}
-        artist={data.artist}
-        price={data.price}
-        quantity={data.quantity}
-      />,
-      { wrapper: MemoryRouter },
-    );
+    renderCartItem();
 
     expect(screen.getByText('Ritual Of Battle')).toBeInTheDocument();
     expect(screen.getByText('Jedi Mind Tricks')).toBeInTheDocument();
-    expect(screen.getByText('$26')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Total for Ritual Of Battle: 26 dollars'),
+    ).toBeInTheDocument();
     expect(screen.getByText('1')).toBeInTheDocument();
+  });
+
+  it('calls onClick when remove button is clicked', async () => {
+    const user = userEvent.setup();
+    const cbFn = vi.fn();
+
+    renderCartItem({ onClick: cbFn });
+
+    const deleteBtn = screen.getByRole('button', { name: /remove/i });
+
+    await user.click(deleteBtn);
+
+    expect(cbFn).toHaveBeenCalledTimes(1);
   });
 });
 
 describe('Summary', () => {
   it('is present in the document', () => {
-    render(<Summary />, { wrapper: MemoryRouter });
+    renderWithProviders(<Summary total={59} />);
     const summary = screen.getByRole('region', { name: /order summary/i });
     expect(summary).toBeInTheDocument();
   });
