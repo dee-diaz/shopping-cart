@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { screen } from '@testing-library/react';
+import { renderWithProviders } from '../../test-utils';
 import Recommendations from './Recommendations';
 
 describe('Recommendations', () => {
-  it('is present in the document', () => {
-    render(<Recommendations />, { wrapper: MemoryRouter });
+  it('has accessible name', () => {
+    renderWithProviders(<Recommendations />);
     const recommendations = screen.getByRole('region', {
       name: /Maybe you’d like/i,
     });
@@ -13,14 +13,15 @@ describe('Recommendations', () => {
   });
 
   it('renders heading', () => {
-    render(<Recommendations />, { wrapper: MemoryRouter });
+    renderWithProviders(<Recommendations />);
     const heading = screen.getByRole('heading', { name: /Maybe you’d like/i });
     expect(heading).toBeInTheDocument();
   });
 
   it('renders card grid', () => {
-    render(<Recommendations />, { wrapper: MemoryRouter });
+    renderWithProviders(<Recommendations />);
     const cardGrid = screen.getByTestId('card-grid');
     expect(cardGrid).toBeInTheDocument();
+    expect(screen.getAllByRole('article')).toHaveLength(4);
   });
 });
