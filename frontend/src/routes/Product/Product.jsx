@@ -3,36 +3,16 @@ import { Link, useParams, useLocation } from 'react-router';
 import ProductDetails from '../../components/ProductDetails/ProductDetails';
 import Tracklist from '../../components/Tracklist/Tracklist';
 import ProductGallery from '../../components/ProductGallery/ProductGallery';
-import { fetchAlbum } from '../../services/catalogService';
-import { useEffect, useState } from 'react';
 import LoadingState from '../../components/LoadingState/LoadingState';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { useLoadAlbum } from '../../hooks/useLoadAlbums';
 
 export default function ProductPage() {
-  const [albumData, setAlbumData] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { id } = useParams();
-
   const location = useLocation();
-
   const backTo = location.state?.from || '/';
 
-  useEffect(() => {
-    async function loadAlbum() {
-      setLoading(true);
-      try {
-        const data = await fetchAlbum(id);
-        setAlbumData(data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadAlbum();
-  }, [id]);
+  const { albumData, error, loading } = useLoadAlbum(id);
 
   let content;
 
@@ -41,10 +21,7 @@ export default function ProductPage() {
   } else if (loading) {
     content = <LoadingState />;
   } else if (albumData) {
-    let imgArr;
-    albumData.images.length > 4
-      ? (imgArr = albumData.images.slice(0, 4))
-      : (imgArr = albumData.images);
+    const imgArr = albumData.images.slice(0, 4);
     content = (
       <article className={styles.product}>
         <ProductGallery albumTitle={albumData.title} imgArr={imgArr} />

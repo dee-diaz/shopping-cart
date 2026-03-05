@@ -1,5 +1,9 @@
-import { useEffect, useContext } from 'react';
-import { fetchFeatured, fetchGenreCatalog } from '../services/catalogService';
+import { useEffect, useContext, useState } from 'react';
+import {
+  fetchFeatured,
+  fetchGenreCatalog,
+  fetchAlbum,
+} from '../services/catalogService';
 import { AlbumsContext } from '../contexts/AlbumsContext';
 
 export function useLoadAlbums(searchParams) {
@@ -39,4 +43,29 @@ export function useLoadAlbums(searchParams) {
 
     loadAlbums();
   }, [searchParams, setAlbums, setError, setLoading]);
+}
+
+export function useLoadAlbum(id) {
+  const [albumData, setAlbumData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadAlbum() {
+      setLoading(true);
+
+      try {
+        const data = await fetchAlbum(id);
+        setAlbumData(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadAlbum();
+  }, [id]);
+
+  return { albumData, error, loading };
 }
