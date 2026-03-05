@@ -15,6 +15,12 @@
   --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
+a, button, [role="button"] {
+  background: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 @font-face {
   font-family: "Suisse Int'l";
   src:
