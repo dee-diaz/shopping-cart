@@ -80,7 +80,6 @@
 
   button {
     width: 100%;
-    max-width: 20rem;
   }
 }
 
@@ -112,6 +111,12 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
   clip-path: inset(50%);
+}
+
+@media (min-width: 576px) {
+  .cartSummary button {
+    max-width: 20rem;
+  }
 }
 
 @media (min-width: 992px) {
