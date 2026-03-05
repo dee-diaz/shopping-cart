@@ -43,7 +43,7 @@ export default function Navbar() {
             </svg>
           </button>
 
-          <CartButton count="2" />
+          <CartButton />
         </div>
       </div>
     </nav>
