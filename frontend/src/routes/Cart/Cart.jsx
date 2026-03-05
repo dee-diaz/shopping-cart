@@ -15,7 +15,7 @@ export default function CartPage() {
         <h1 className={styles.title}>Cart</h1>
 
         {isEmpty ? (
-          <EmptyState text="You cart is currently empty." />
+          <EmptyState text="Your cart is currently empty." />
         ) : (
           <CartList />
         )}
