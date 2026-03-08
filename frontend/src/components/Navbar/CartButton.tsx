@@ -1,10 +1,9 @@
 import styles from './Navbar.module.css';
 import { Link } from 'react-router';
-import { useContext } from 'react';
-import { CartContext } from '../../contexts/CartContext';
+import { useCart } from '../../hooks/useCart';
 
 export default function CartButton() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems } = useCart();
   const count = cartItems.length;
 
   const label =
