@@ -55,13 +55,13 @@ export function useLoadAlbums(searchParams: URLSearchParams): void {
 
 interface UseLoadAlbumReturn {
   albumData: Album | null;
-  error: string | null;
+  error: Error | null;
   loading: boolean;
 }
 
 export function useLoadAlbum(id: number): UseLoadAlbumReturn {
   const [albumData, setAlbumData] = useState<Album | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export function useLoadAlbum(id: number): UseLoadAlbumReturn {
         const data = await fetchAlbum(id);
         setAlbumData(data);
       } catch (error) {
-        setError(error instanceof Error ? error.message : 'Unknown error');
+        setError(error instanceof Error ? error : new Error('Unknown error'));
       } finally {
         setLoading(false);
       }

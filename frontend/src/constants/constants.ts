@@ -1,7 +1,7 @@
 export const ADD_BTN_VARIANT = {
   ICON: 'icon',
   PRIMARY: 'primary',
-};
+} as const;
 
 export const SORT_TYPE = {
   POPULAR: 'Popular',
