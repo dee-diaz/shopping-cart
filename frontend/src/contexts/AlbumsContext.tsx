@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
 import { SORT_TYPE } from '../constants/constants';
 import { Album } from '../types/album';
+import { Props } from '../types/props';
 
 type SortType =
   | 'Popular'
@@ -20,10 +21,6 @@ interface AlbumsContextType {
 
   sortType: SortType;
   setSortType: React.Dispatch<React.SetStateAction<SortType>>;
-}
-
-interface Props {
-  children: React.ReactNode;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

@@ -5,7 +5,7 @@ export function useAlbums() {
   const context = useContext(AlbumsContext);
 
   if (!context) {
-    throw new Error('useCart must be used inside CartContextProvider');
+    throw new Error('useAlbums must be used inside AlbumsContextProvider');
   }
 
   return context;

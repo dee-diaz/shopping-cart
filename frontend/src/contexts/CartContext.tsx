@@ -1,9 +1,6 @@
 import { createContext, useState } from 'react';
 import { CartItem } from '../types/cartItem';
-
-interface Props {
-  children: React.ReactNode;
-}
+import { Props } from '../types/props';
 
 interface CartContextType {
   cartItems: CartItem[];

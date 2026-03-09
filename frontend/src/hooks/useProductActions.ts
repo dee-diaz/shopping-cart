@@ -1,16 +1,16 @@
-import { useContext, useState } from 'react';
-import { WishlistContext } from '../contexts/WishlistContext';
-import { CartContext } from '../contexts/CartContext';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { fetchAlbum } from '../services/catalogService';
 import { getDisplayPrice } from '../services/priceService';
+import { useCart } from './useCart';
+import { useWishlist } from './useWishlist';
 
 export function useProductActions() {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const navigate = useNavigate();
-  const { wishlistItems, setWishlistItems } = useContext(WishlistContext);
-  const { cartItems, setCartItems } = useContext(CartContext);
+  const { wishlistItems, setWishlistItems } = useWishlist();
+  const { cartItems, setCartItems } = useCart();
   const productId = Number(id);
   const isWishlisted = wishlistItems.some((item) => item.id === productId);
   const isInCart = cartItems.find((item) => item.id === productId);
