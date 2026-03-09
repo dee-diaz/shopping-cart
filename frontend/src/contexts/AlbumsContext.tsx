@@ -2,12 +2,7 @@ import { createContext, useState } from 'react';
 import { SORT_TYPE } from '../constants/constants';
 import { Album } from '../types/album';
 import { Props } from '../types/props';
-
-type SortType =
-  | 'Popular'
-  | 'Newest'
-  | 'Price: Low → High'
-  | 'Price: High → Low';
+import { SortType } from '../types/sortType';
 
 interface AlbumsContextType {
   albums: Album[];

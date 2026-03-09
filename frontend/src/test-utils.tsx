@@ -5,9 +5,23 @@ import { CartContext } from './contexts/CartContext';
 import { AlbumsContext } from './contexts/AlbumsContext';
 import { WishlistContext } from './contexts/WishlistContext';
 import { SORT_TYPE } from './constants/constants';
+import { ReactElement } from 'react';
+import { Album } from './types/album';
+import { CartItem } from './types/cartItem';
+import { SortType } from './types/sortType';
+
+interface RenderWithProvidersOptions {
+  cartItems?: CartItem[];
+  wishlistItems?: Album[];
+  albums?: Album[];
+  loading?: boolean;
+  error?: string | null;
+  sortType?: SortType;
+  setSortType?: React.Dispatch<React.SetStateAction<SortType>>;
+}
 
 export function renderWithProviders(
-  ui,
+  ui: ReactElement,
   {
     cartItems = [],
     wishlistItems = [],
@@ -16,7 +30,7 @@ export function renderWithProviders(
     error = null,
     sortType = SORT_TYPE.POPULAR,
     setSortType = vi.fn(),
-  } = {},
+  }: RenderWithProvidersOptions = {},
 ) {
   return render(
     <AlbumsContext.Provider
