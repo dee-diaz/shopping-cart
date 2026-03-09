@@ -1,6 +1,16 @@
 import styles from './Button.module.css';
 
-export default function IconButton({ icon, onClick, ariaLabel }) {
+interface IconButtonProps {
+  icon: React.ReactNode;
+  onClick: () => void;
+  ariaLabel: string;
+}
+
+export default function IconButton({
+  icon,
+  onClick,
+  ariaLabel,
+}: IconButtonProps) {
   return (
     <button
       aria-label={ariaLabel}

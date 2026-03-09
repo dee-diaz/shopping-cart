@@ -1,25 +1,28 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './SortDropdown.module.css';
 import { SORT_TYPE } from '../../constants/constants';
-import { AlbumsContext } from '../../contexts/AlbumsContext';
+import { useAlbums } from '../../hooks/useAlbums';
+import { SortType } from '../../types/sortType';
 
 export default function SortDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(SORT_TYPE.POPULAR);
-  const dropdownRef = useRef(null);
-  const { setSortType } = useContext(AlbumsContext);
+  const [selectedOption, setSelectedOption] = useState<SortType>(
+    SORT_TYPE.POPULAR,
+  );
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const { setSortType } = useAlbums();
 
-  function handleClick(option) {
+  function handleClick(option: SortType): void {
     setSortType(option);
     setSelectedOption(option);
     setIsOpen(false);
   }
 
   useEffect(() => {
-    function handleClickOutside(e) {
+    function handleClickOutside(e: MouseEvent | KeyboardEvent) {
       if (
-        (e.type === 'keydown' && e.key === 'Escape') ||
-        (dropdownRef.current && !dropdownRef.current.contains(e.target))
+        (e.type === 'keydown' && (e as KeyboardEvent).key === 'Escape') ||
+        (dropdownRef.current && !dropdownRef.current.contains(e.target as Node))
       ) {
         setIsOpen(false);
       }

@@ -3,7 +3,17 @@ import { ADD_BTN_VARIANT } from '../../constants/constants';
 import Button from './Button';
 import { useState } from 'react';
 
-const cartIcon = (
+type Variant = 'icon' | 'primary';
+
+interface AddToCartButtonProps {
+  variant: Variant;
+  isInCart?: boolean;
+  albumTitle?: string;
+  albumArtist?: string;
+  onClick: () => void,
+}
+
+const cartIcon: React.ReactNode = (
   <svg
     width="20"
     height="20"
@@ -25,7 +35,7 @@ export default function AddToCartButton({
   albumTitle,
   albumArtist,
   onClick,
-}) {
+}: AddToCartButtonProps) {
   const [loading, setLoading] = useState(false);
   const icon = isInCart ? (
     <svg

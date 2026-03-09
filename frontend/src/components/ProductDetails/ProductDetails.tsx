@@ -6,6 +6,16 @@ import PriceRow from '../PriceRow/PriceRow';
 import ProductActions from '../ProductActions/ProductActions';
 import { getDisplayPrice } from '../../services/priceService';
 
+interface ProductDetailsProps {
+  artist: string;
+  artistImg: string;
+  title: string;
+  year: number;
+  genre: string;
+  subgenres: string[];
+  lowestPrice: number;
+}
+
 export default function ProductDetails({
   artist,
   artistImg,
@@ -14,7 +24,7 @@ export default function ProductDetails({
   genre,
   subgenres,
   lowestPrice,
-}) {
+}: ProductDetailsProps) {
   const price = getDisplayPrice(lowestPrice);
   return (
     <div className={styles.productDetails} data-testid="product-details">

@@ -1,6 +1,6 @@
 import styles from './PriceRow.module.css';
 
-export default function PriceRow({ price }) {
+export default function PriceRow({ price }: { price: string }) {
   return (
     <div className={styles.priceRow} data-testid="price-row">
       <span className={styles.price}>{price}</span>

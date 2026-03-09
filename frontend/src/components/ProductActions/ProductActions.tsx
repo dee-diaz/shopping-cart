@@ -1,11 +1,11 @@
 import styles from './ProductActions.module.css';
 import QuantityInput from './QuantityInput/QuantityInput';
-import IconButton from '../../components/Button/IconButton';
+import IconButton from '../Button/IconButton';
 import { ADD_BTN_VARIANT } from '../../constants/constants';
 import AddToCartButton from '../Button/AddToCartButton';
 import { useProductActions } from '../../hooks/useProductActions';
 
-const heartIcon = (
+const heartIcon: React.ReactNode = (
   <svg
     aria-hidden="true"
     viewBox="0 0 36 36"
@@ -16,7 +16,7 @@ const heartIcon = (
   </svg>
 );
 
-const heartIconFilled = (
+const heartIconFilled: React.ReactNode = (
   <svg
     aria-hidden="true"
     viewBox="0 0 36 36"

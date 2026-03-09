@@ -2,12 +2,12 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import './global.css';
-import App from './App.jsx';
-import HomePage from './routes/Home/Home.jsx';
-import ProductPage from './routes/Product/Product.jsx';
-import CartPage from './routes/Cart/Cart.jsx';
-import WishlistPage from './routes/Wishlist/Wishlist.jsx';
-import ShopProviders from './contexts/ShopProviders.jsx';
+import App from './App';
+import HomePage from './routes/Home/Home';
+import ProductPage from './routes/Product/Product';
+import CartPage from './routes/Cart/Cart';
+import WishlistPage from './routes/Wishlist/Wishlist';
+import ShopProviders from './contexts/ShopProviders';
 
 const router = createBrowserRouter([
   {

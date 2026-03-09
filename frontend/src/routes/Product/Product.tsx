@@ -12,7 +12,7 @@ export default function ProductPage() {
   const location = useLocation();
   const backTo = location.state?.from || '/';
 
-  const { albumData, error, loading } = useLoadAlbum(id);
+  const { albumData, error, loading } = useLoadAlbum(Number(id));
 
   let content;
 

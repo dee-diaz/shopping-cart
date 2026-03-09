@@ -2,14 +2,19 @@ import styles from './FilterSidebar.module.css';
 import { useState, useEffect } from 'react';
 import { useGenreFilters } from '../../hooks/useGenreFilters';
 import Button from '../Button/Button';
-import { GENRES } from '../../data/catalog';
+import { GENRES } from '../../constants/constants';
 import { useLoadAlbums } from '../../hooks/useLoadAlbums';
+import {
+  FilterSidebarProps,
+  GenreFilterProps,
+  PriceFilterProps,
+} from '../../types/filters';
 
-function FilterSidebar({ onApply, priceRange }) {
+function FilterSidebar({ onApply, priceRange }: FilterSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { searchParams, selectedGenres, toggleGenre } = useGenreFilters();
 
-  function handlePriceFilterChange(min, max) {
+  function handlePriceFilterChange(min?: number, max?: number) {
     onApply(min, max);
     setIsOpen(false);
   }
@@ -27,7 +32,9 @@ function FilterSidebar({ onApply, priceRange }) {
         <ModalCloseButton onClick={() => setIsOpen(false)} />
         <GenreFilter
           selectedGenres={selectedGenres}
-          onChange={(e) => toggleGenre(e.target.value, e.target.checked)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            toggleGenre(e.target.value, e.target.checked)
+          }
         />
         <PriceFilter
           appliedValue={priceRange}
@@ -38,7 +45,7 @@ function FilterSidebar({ onApply, priceRange }) {
   );
 }
 
-export function GenreFilter({ selectedGenres, onChange }) {
+export function GenreFilter({ selectedGenres, onChange }: GenreFilterProps) {
   return (
     <div className={styles.genreFilter}>
       <h3>Genre</h3>
@@ -59,7 +66,7 @@ export function GenreFilter({ selectedGenres, onChange }) {
   );
 }
 
-export function PriceFilter({ appliedValue, onApply }) {
+export function PriceFilter({ appliedValue, onApply }: PriceFilterProps) {
   const [draftMin, setDraftMin] = useState(appliedValue.min ?? '');
   const [draftMax, setDraftMax] = useState(appliedValue.max ?? '');
 
@@ -102,7 +109,11 @@ export function PriceFilter({ appliedValue, onApply }) {
   );
 }
 
-export function FilterIcon({ onClick }) {
+interface IconProps {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+export function FilterIcon({ onClick }: IconProps) {
   return (
     <button
       aria-label="Open filters"
@@ -130,7 +141,7 @@ export function FilterIcon({ onClick }) {
   );
 }
 
-export function ModalCloseButton({ onClick }) {
+export function ModalCloseButton({ onClick }: IconProps) {
   return (
     <button
       aria-label="Close filters"

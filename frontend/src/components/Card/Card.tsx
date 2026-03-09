@@ -1,9 +1,18 @@
 import styles from './Card.module.css';
 import { Link, useLocation } from 'react-router';
-import { useContext } from 'react';
-import { CartContext } from '../../contexts/CartContext';
 import AddToCartButton from '../Button/AddToCartButton';
 import { ADD_BTN_VARIANT } from '../../constants/constants';
+import { useCart } from '../../hooks/useCart';
+import { CartItem } from '../../types/cartItem';
+
+interface CardProps {
+  albumId: number;
+  genre: string;
+  albumTitle: string;
+  albumArtist: string;
+  coverImgUrl: string;
+  price: number;
+}
 
 export default function Card({
   albumId,
@@ -12,12 +21,12 @@ export default function Card({
   albumArtist,
   coverImgUrl,
   price,
-}) {
+}: CardProps) {
   const location = useLocation();
-  const { cartItems, setCartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useCart();
   const altText = `${albumTitle} by ${albumArtist} album cover`;
 
-  const isAddedToCart = cartItems.find((item) => item.id === albumId);
+  const isAddedToCart: boolean = cartItems.some((item) => item.id === albumId);
 
   function handleClick() {
     if (cartItems.find((el) => el.id === albumId)) {
@@ -26,7 +35,7 @@ export default function Card({
       return;
     }
 
-    const obj = {
+    const obj: CartItem = {
       id: albumId,
       genre,
       title: albumTitle,

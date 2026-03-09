@@ -1,6 +1,16 @@
 import styles from './QuantityInput.module.css';
 
-export default function QuantityInput({ quantity, onIncrement, onDecrement }) {
+interface QuantityInputProps {
+  quantity: number;
+  onIncrement: () => void;
+  onDecrement: () => void;
+}
+
+export default function QuantityInput({
+  quantity,
+  onIncrement,
+  onDecrement,
+}: QuantityInputProps) {
   return (
     <div className={styles.quantity} role="group" aria-label="Quantity">
       <button

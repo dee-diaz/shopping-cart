@@ -1,6 +1,12 @@
 import styles from './ProductMeta.module.css';
 
-export default function ProductMeta({ year, genre, subgenres }) {
+interface ProductMetaProps {
+  year: number;
+  genre: string;
+  subgenres: string[];
+}
+
+export default function ProductMeta({ year, genre, subgenres }: ProductMetaProps) {
   const subgenresStr = subgenres.join(', ');
   return (
     <dl className={styles.productMeta}>

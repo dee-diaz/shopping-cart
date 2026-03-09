@@ -1,6 +1,16 @@
 import styles from './ArtistHeader.module.css';
 
-export default function ArtistHeader({ artistImg, artistName, albumTitle }) {
+interface ArtistHeaderProps {
+  artistImg: string;
+  artistName: string;
+  albumTitle: string;
+}
+
+export default function ArtistHeader({
+  artistImg,
+  artistName,
+  albumTitle,
+}: ArtistHeaderProps) {
   return (
     <header className={styles.artistHeader}>
       <div className={styles.wrapper}>

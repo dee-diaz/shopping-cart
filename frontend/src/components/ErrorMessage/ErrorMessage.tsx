@@ -1,6 +1,10 @@
 import styles from './ErrorMessage.module.css';
 
-export default function ErrorMessage({ message }) {
+interface ErrorMessageProps {
+  message: string;
+}
+
+export default function ErrorMessage({ message }: ErrorMessageProps) {
   return (
     <div role="alert" className={styles.error}>
       <h2 className={styles.title}>Whoops, something went wrong</h2>

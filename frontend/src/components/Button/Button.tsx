@@ -1,6 +1,20 @@
 import styles from './Button.module.css';
 
-export default function Button({ label, icon, size, isDisabled, onClick }) {
+interface ButtonProps {
+  label: string;
+  icon?: React.ReactNode;
+  size?: 'sm';
+  isDisabled?: boolean;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+export default function Button({
+  label,
+  icon,
+  size,
+  isDisabled,
+  onClick,
+}: ButtonProps) {
   const classes = [styles.btnPrimary, size === 'sm' && styles.sm]
     .filter(Boolean)
     .join(' ');

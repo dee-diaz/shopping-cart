@@ -1,6 +1,14 @@
 import styles from './Tracklist.module.css';
 
-export default function Tracklist({ tracklist }) {
+interface TracklistProps {
+  tracklist: {
+    title?: string;
+    position?: string;
+    duration?: string;
+  }[];
+}
+
+export default function Tracklist({ tracklist }: TracklistProps) {
   return (
     <section className={styles.section} aria-labelledby="tracklist-title">
       <h2 id="tracklist-title" className={styles.title}>
@@ -23,7 +31,17 @@ export default function Tracklist({ tracklist }) {
   );
 }
 
-export function TracklistItem({ position, title, duration }) {
+interface TracklistItemProps {
+  title?: string;
+  position?: string;
+  duration?: string;
+}
+
+export function TracklistItem({
+  position,
+  title,
+  duration,
+}: TracklistItemProps) {
   return (
     <li className={styles.listItem}>
       <div className={styles.wrapper}>

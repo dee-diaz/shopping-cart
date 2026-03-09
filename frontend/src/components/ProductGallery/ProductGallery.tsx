@@ -1,6 +1,18 @@
 import styles from './ProductGallery.module.css';
 
-export default function ProductGallery({ albumTitle, imgArr }) {
+type Image = {
+  uri: string;
+};
+
+interface ProductGalleryProps {
+  albumTitle: string;
+  imgArr: Image[];
+}
+
+export default function ProductGallery({
+  albumTitle,
+  imgArr,
+}: ProductGalleryProps) {
   return (
     <div
       role="group"
@@ -11,8 +23,8 @@ export default function ProductGallery({ albumTitle, imgArr }) {
         return (
           <div key={index} className={styles.imgWrapper}>
             <img
-              src={img.uri}
-              alt={`${albumTitle}, ${index + 1}/${imgArr.length}`}
+              src={img.uri || '/images/album-placeholder.webp'}
+              alt={`${albumTitle} album image ${index + 1} of ${imgArr.length}`}
               className={index === 0 ? styles.mainImage : styles.imgThumbnail}
             />
           </div>
