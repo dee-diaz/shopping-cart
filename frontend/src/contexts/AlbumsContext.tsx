@@ -11,8 +11,8 @@ interface AlbumsContextType {
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 
-  error: string | null;
-  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  error: Error | null;
+  setError: React.Dispatch<React.SetStateAction<Error | null>>;
 
   sortType: SortType;
   setSortType: React.Dispatch<React.SetStateAction<SortType>>;
@@ -24,7 +24,7 @@ export const AlbumsContext = createContext<AlbumsContextType | null>(null);
 export default function AlbumsContextProvider({ children }: Props) {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [sortType, setSortType] = useState<SortType>(SORT_TYPE.POPULAR);
 
   const value: AlbumsContextType = {

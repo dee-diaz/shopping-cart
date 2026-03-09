@@ -11,46 +11,46 @@ export function useLoadAlbums(searchParams: URLSearchParams): void {
   const { setAlbums, setError, setLoading } = useAlbums();
 
   useEffect(() => {
-  let cancelled = false;
+    let cancelled = false;
 
-  async function loadAlbums() {
-    setLoading(true);
+    async function loadAlbums() {
+      setLoading(true);
 
-    const selectedGenres = searchParams.getAll('genre');
+      const selectedGenres = searchParams.getAll('genre');
 
-    try {
-      if (selectedGenres.length !== 0) {
-        const results: Album[][] = await Promise.all(
-          selectedGenres.map((genre) => fetchGenreCatalog(genre)),
-        );
+      try {
+        if (selectedGenres.length !== 0) {
+          const results: Album[][] = await Promise.all(
+            selectedGenres.map((genre) => fetchGenreCatalog(genre)),
+          );
 
-        if (!cancelled) {
-          setAlbums(results.flat());
+          if (!cancelled) {
+            setAlbums(results.flat());
+          }
+        } else {
+          const data = await fetchFeatured();
+
+          if (!cancelled) {
+            setAlbums(data);
+          }
         }
-      } else {
-        const data = await fetchFeatured();
-
+      } catch (error) {
         if (!cancelled) {
-          setAlbums(data);
+          setError(error instanceof Error ? error : new Error('Unknown error'));
         }
-      }
-    } catch (error) {
-      if (!cancelled) {
-        setError(error instanceof Error ? error.message : 'Unknown error');
-      }
-    } finally {
-      if (!cancelled) {
-        setLoading(false);
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
-  }
 
-  loadAlbums();
+    loadAlbums();
 
-  return () => {
-    cancelled = true;
-  };
-}, [searchParams, setAlbums, setError, setLoading]);
+    return () => {
+      cancelled = true;
+    };
+  }, [searchParams, setAlbums, setError, setLoading]);
 }
 
 interface UseLoadAlbumReturn {

@@ -72,6 +72,6 @@ describe('ProductGallery', () => {
     render(<ProductGallery albumTitle={mockData.title} imgArr={oneImgArr} />);
     const image = screen.getByRole('img');
 
-    expect(image).toHaveAttribute('alt', 'MM..Food, 1/1');
+    expect(image).toHaveAttribute('alt', 'MM..Food album image 1 of 1');
   });
 });

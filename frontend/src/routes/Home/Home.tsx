@@ -32,7 +32,9 @@ export default function HomePage() {
         {loading ? (
           <LoadingState />
         ) : error ? (
-          <ErrorMessage message={error} />
+          <ErrorMessage
+            message={error instanceof Error ? error.message : error}
+          />
         ) : (
           <CardGrid albums={albums} priceRange={priceRange} />
         )}
