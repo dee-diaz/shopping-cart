@@ -1,11 +1,17 @@
 import { useSearchParams } from 'react-router';
 
-export function useGenreFilters() {
+interface UseGenreFiltersReturn {
+  searchParams: URLSearchParams;
+  selectedGenres: string[];
+  toggleGenre: (value: string, checked: boolean) => void;
+}
+
+export function useGenreFilters(): UseGenreFiltersReturn {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedGenres = searchParams.getAll('genre');
 
-  function toggleGenre(value: string, checked: boolean) {
+  function toggleGenre(value: string, checked: boolean): void {
     const params = new URLSearchParams(searchParams);
     const genres = params.getAll('genre');
 

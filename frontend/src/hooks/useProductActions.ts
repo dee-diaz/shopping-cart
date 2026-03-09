@@ -4,10 +4,19 @@ import { fetchAlbum } from '../services/catalogService';
 import { getDisplayPrice } from '../services/priceService';
 import { useCart } from './useCart';
 import { useWishlist } from './useWishlist';
+import { CartItem } from '../types/cartItem';
 
-export function useProductActions() {
+interface UseProductActionsReturn {
+  isWishlisted: boolean;
+  quantity: number;
+  handleAddToWishlist: () => Promise<void>;
+  handleAddToCart: () => Promise<void>;
+  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export function useProductActions(): UseProductActionsReturn {
   const [quantity, setQuantity] = useState(1);
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { wishlistItems, setWishlistItems } = useWishlist();
   const { cartItems, setCartItems } = useCart();
@@ -15,7 +24,7 @@ export function useProductActions() {
   const isWishlisted = wishlistItems.some((item) => item.id === productId);
   const isInCart = cartItems.find((item) => item.id === productId);
 
-  async function handleAddToWishlist() {
+  async function handleAddToWishlist(): Promise<void> {
     if (!isWishlisted) {
       const album = await fetchAlbum(id);
       setWishlistItems((prev) => [...prev, album]);
@@ -25,10 +34,10 @@ export function useProductActions() {
     }
   }
 
-  async function handleAddToCart() {
+  async function handleAddToCart(): Promise<void> {
     if (!isInCart) {
-      const album = await fetchAlbum(id);
-      const cartObj = {
+      const album = await fetchAlbum(productId);
+      const cartObj: CartItem = {
         id: album.id,
         genre: album.genres[0],
         title: album.title,

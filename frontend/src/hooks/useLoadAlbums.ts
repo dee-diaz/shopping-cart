@@ -5,49 +5,63 @@ import {
   fetchAlbum,
 } from '../services/catalogService';
 import { useAlbums } from './useAlbums';
+import { Album } from '../types/album';
 
-export function useLoadAlbums(searchParams) {
+export function useLoadAlbums(searchParams: URLSearchParams): void {
   const { setAlbums, setError, setLoading } = useAlbums();
 
   useEffect(() => {
-    let loadAlbums;
+  let cancelled = false;
+
+  async function loadAlbums() {
     setLoading(true);
 
     const selectedGenres = searchParams.getAll('genre');
 
-    if (selectedGenres.length !== 0) {
-      loadAlbums = async () => {
-        try {
-          const results = await Promise.all(
-            selectedGenres.map((genre) => fetchGenreCatalog(genre)),
-          );
-          setAlbums(results.flat());
-        } catch (error) {
-          setError(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-    } else {
-      loadAlbums = async () => {
-        try {
-          const data = await fetchFeatured();
-          setAlbums(data);
-        } catch (error) {
-          setError(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-    }
+    try {
+      if (selectedGenres.length !== 0) {
+        const results: Album[][] = await Promise.all(
+          selectedGenres.map((genre) => fetchGenreCatalog(genre)),
+        );
 
-    loadAlbums();
-  }, [searchParams, setAlbums, setError, setLoading]);
+        if (!cancelled) {
+          setAlbums(results.flat());
+        }
+      } else {
+        const data = await fetchFeatured();
+
+        if (!cancelled) {
+          setAlbums(data);
+        }
+      }
+    } catch (error) {
+      if (!cancelled) {
+        setError(error instanceof Error ? error.message : 'Unknown error');
+      }
+    } finally {
+      if (!cancelled) {
+        setLoading(false);
+      }
+    }
+  }
+
+  loadAlbums();
+
+  return () => {
+    cancelled = true;
+  };
+}, [searchParams, setAlbums, setError, setLoading]);
 }
 
-export function useLoadAlbum(id) {
-  const [albumData, setAlbumData] = useState(null);
-  const [error, setError] = useState(null);
+interface UseLoadAlbumReturn {
+  albumData: Album | null;
+  error: string | null;
+  loading: boolean;
+}
+
+export function useLoadAlbum(id: number): UseLoadAlbumReturn {
+  const [albumData, setAlbumData] = useState<Album | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -58,7 +72,7 @@ export function useLoadAlbum(id) {
         const data = await fetchAlbum(id);
         setAlbumData(data);
       } catch (error) {
-        setError(error);
+        setError(error instanceof Error ? error.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
