@@ -1,10 +1,10 @@
 import { catalog } from '../data/catalog';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
 const endpoint = '/albums/';
 const url = API_URL + endpoint;
 
-export async function fetchAlbum(masterId) {
+export async function fetchAlbum(masterId: number | string) {
   const res = await fetch(url + masterId);
   if (!res.ok) {
     throw new Error(`HTTP ${res.status}`);
@@ -12,7 +12,7 @@ export async function fetchAlbum(masterId) {
   return res.json();
 }
 
-export function fetchGenreCatalog(genre) {
+export function fetchGenreCatalog(genre: string) {
   const albums = Object.values(catalog[genre]);
   return Promise.all(albums.map((album) => fetchAlbum(album.masterId)));
 }
