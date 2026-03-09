@@ -2,11 +2,10 @@ import styles from './Cart.module.css';
 import Recommendations from '../../components/Recommendations/Recommendations';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import CartList from '../../components/CartTable/CartTable';
-import { CartContext } from '../../contexts/CartContext';
-import { useContext } from 'react';
+import { useCart } from '../../hooks/useCart';
 
 export default function CartPage() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems } = useCart();
   const isEmpty = !cartItems || cartItems.length === 0;
 
   return (

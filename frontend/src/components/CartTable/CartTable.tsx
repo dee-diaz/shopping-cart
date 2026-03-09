@@ -3,10 +3,9 @@ import QuantityInput from '../ProductActions/QuantityInput/QuantityInput';
 import IconButton from '../Button/IconButton';
 import Button from '../Button/Button';
 import { Link } from 'react-router';
-import { CartContext } from '../../contexts/CartContext';
-import { useContext } from 'react';
+import { useCart } from '../../hooks/useCart';
 
-const trashIcon = (
+const trashIcon: React.ReactNode = (
   <svg
     viewBox="0 0 24 24"
     fill="none"
@@ -18,14 +17,14 @@ const trashIcon = (
 );
 
 export default function CartList() {
-  const { cartItems, setCartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useCart();
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
 
-  function handleDelete(id) {
+  function handleDelete(id: number | string) {
     setCartItems((prev) => prev.filter((item) => item.id !== Number(id)));
   }
 
@@ -58,6 +57,16 @@ export default function CartList() {
   );
 }
 
+interface CartItemProps {
+  albumId: number;
+  img: string;
+  title: string;
+  artist: string;
+  price: number;
+  quantity: number;
+  onClick: (id: number) => void;
+}
+
 export function CartItem({
   albumId,
   img,
@@ -66,8 +75,8 @@ export function CartItem({
   price,
   quantity,
   onClick,
-}) {
-  const { setCartItems } = useContext(CartContext);
+}: CartItemProps) {
+  const { setCartItems } = useCart();
   const total = Number(price) * Number(quantity);
 
   return (
@@ -130,7 +139,6 @@ export function CartItem({
       </p>
 
       <IconButton
-        className={styles.removeBtn}
         icon={trashIcon}
         ariaLabel={`Remove ${title} from cart`}
         onClick={() => onClick(albumId)}
@@ -139,7 +147,11 @@ export function CartItem({
   );
 }
 
-export function Summary({ total }) {
+interface SummaryProps {
+  total: number;
+}
+
+export function Summary({ total }: SummaryProps) {
   return (
     <section aria-labelledby="summary-title" className={styles.cartSummary}>
       <h2 id="summary-title" className={styles.srOnly}>

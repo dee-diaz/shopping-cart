@@ -2,11 +2,10 @@ import styles from './Wishlist.module.css';
 import CardGrid from '../../components/CardGrid/CardGrid';
 import Recommendations from '../../components/Recommendations/Recommendations';
 import EmptyState from '../../components/EmptyState/EmptyState';
-import { useContext } from 'react';
-import { WishlistContext } from '../../contexts/WishlistContext';
+import { useWishlist } from '../../hooks/useWishlist';
 
 export default function WishlistPage() {
-  const { wishlistItems } = useContext(WishlistContext);
+  const { wishlistItems } = useWishlist();
 
   const isEmpty = wishlistItems.length === 0;
 

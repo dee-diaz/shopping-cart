@@ -1,7 +1,8 @@
 import styles from './Recommendations.module.css';
 import CardGrid from '../CardGrid/CardGrid';
+import { Album } from '../../types/album';
 
-const defaultRecommendations = [
+const defaultRecommendations: Album[] = [
   {
     id: 24047,
     genres: ['Rock'],

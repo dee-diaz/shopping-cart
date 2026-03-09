@@ -5,15 +5,15 @@ export interface Album {
     uri: string;
   }[];
   genres: string[];
-  styles: string[];
-  year: number;
-  tracklist: {
+  styles?: string[];
+  year?: number;
+  tracklist?: {
     position: string;
     duration: string;
   }[];
   artists: {
     name: string;
-    thumbnail_url: string;
+    thumbnail_url?: string;
   }[];
   title: string;
 }
