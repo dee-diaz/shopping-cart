@@ -1,13 +1,13 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   fetchFeatured,
   fetchGenreCatalog,
   fetchAlbum,
 } from '../services/catalogService';
-import { AlbumsContext } from '../contexts/AlbumsContext';
+import { useAlbums } from './useAlbums';
 
 export function useLoadAlbums(searchParams) {
-  const { setAlbums, setError, setLoading } = useContext(AlbumsContext);
+  const { setAlbums, setError, setLoading } = useAlbums();
 
   useEffect(() => {
     let loadAlbums;

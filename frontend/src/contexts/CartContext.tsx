@@ -1,14 +1,5 @@
 import { createContext, useState } from 'react';
-
-export interface CartItem {
-  id: number;
-  genre: string;
-  title: string;
-  artist: string;
-  coverImgUrl: string;
-  price: number;
-  quantity: number;
-}
+import { CartItem } from '../types/cartItem';
 
 interface Props {
   children: React.ReactNode;

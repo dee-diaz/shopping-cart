@@ -5,7 +5,7 @@ export function useGenreFilters() {
 
   const selectedGenres = searchParams.getAll('genre');
 
-  function toggleGenre(value, checked) {
+  function toggleGenre(value: string, checked: boolean) {
     const params = new URLSearchParams(searchParams);
     const genres = params.getAll('genre');
 

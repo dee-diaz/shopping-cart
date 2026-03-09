@@ -1,15 +1,4 @@
-export const GENRES = {
-  ALTERNATIVE: 'Alternative',
-  ELECTRONIC: 'Electronic',
-  HIPHOP: 'Hip Hop',
-  HOUSE: 'House',
-  JAZZ: 'Jazz',
-  LATIN: 'Latin',
-  POP: 'Pop',
-  RNB: 'R&B',
-  ROCK: 'Rock',
-  TECHNO: 'Techno',
-};
+import { GENRES } from "../constants/constants";
 
 export const catalog = {
   [GENRES.ALTERNATIVE]: [
