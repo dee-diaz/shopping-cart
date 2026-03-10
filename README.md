@@ -1,4 +1,4 @@
-# Grain & Noise — Shopping Cart
+# Grain & Noise — React + TypeScript Vinyl Store
 
 A full-stack e-commerce demo that simulates a vinyl store experience: product catalog browsing, genre and price filtering, sorting, wishlist management, cart operations, and product details.
 
