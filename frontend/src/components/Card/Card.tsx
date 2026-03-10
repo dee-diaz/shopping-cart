@@ -5,7 +5,7 @@ import { ADD_BTN_VARIANT } from '../../constants/constants';
 import { useCart } from '../../hooks/useCart';
 import { CartItem } from '../../types/cartItem';
 
-interface CardProps {
+export interface CardProps {
   albumId: number;
   genre: string;
   albumTitle: string;

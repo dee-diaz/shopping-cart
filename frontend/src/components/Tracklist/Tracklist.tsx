@@ -2,7 +2,7 @@ import styles from './Tracklist.module.css';
 
 interface TracklistProps {
   tracklist: {
-    title?: string;
+    title: string;
     position?: string;
     duration?: string;
   }[];

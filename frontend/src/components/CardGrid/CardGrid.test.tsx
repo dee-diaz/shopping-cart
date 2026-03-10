@@ -2,8 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { screen } from '@testing-library/react';
 import CardGrid from './CardGrid';
 import { renderWithProviders } from '../../test-utils';
+import { Album } from '../../types/album';
 
-const mockAlbums = [
+const mockAlbums: Album[] = [
   {
     id: 101,
     genres: ['Hip-Hop'],

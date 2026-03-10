@@ -6,7 +6,7 @@ import styles from './Button.module.css';
 
 describe('Button', () => {
   it('renders with correct text', () => {
-    render(<Button label="Add to cart" />);
+    render(<Button label="Add to cart" onClick={vi.fn()} />);
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
     expect(button).toHaveTextContent('Add to cart');
@@ -27,25 +27,25 @@ describe('Button', () => {
         />
       </svg>
     );
-    render(<Button label="Add to cart" icon={cartIcon} />);
+    render(<Button label="Add to cart" icon={cartIcon} onClick={vi.fn()} />);
     const button = screen.getByRole('button');
     expect(button.querySelector('svg')).toBeInTheDocument();
   });
 
   it('renders with correct size', () => {
-    render(<Button label="Add to cart" size="sm" />);
+    render(<Button label="Add to cart" size="sm" onClick={vi.fn()} />);
     const button = screen.getByRole('button');
     expect(button).toHaveClass(styles.sm);
   });
 
   it('renders as disabled when prop is passed', () => {
-    render(<Button label="Add to cart" isDisabled={true} />);
+    render(<Button label="Add to cart" isDisabled={true} onClick={vi.fn()} />);
     const button = screen.getByRole('button');
     expect(button).toBeDisabled();
   });
 
   it('does not render as disabled when prop is passed with false value', () => {
-    render(<Button label="Add to cart" isDisabled={false} />);
+    render(<Button label="Add to cart" isDisabled={false} onClick={vi.fn()} />);
     const button = screen.getByRole('button');
     expect(button).not.toBeDisabled();
   });

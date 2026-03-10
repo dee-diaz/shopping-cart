@@ -62,7 +62,7 @@ interface CartItemProps {
   img: string;
   title: string;
   artist: string;
-  price: number;
+  price: number | string;
   quantity: number;
   onClick: (id: number) => void;
 }

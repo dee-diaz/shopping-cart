@@ -5,10 +5,11 @@ import { renderWithProviders } from '../../test-utils';
 import { useLoadAlbum } from '../../hooks/useLoadAlbums';
 
 vi.mock('../../hooks/useLoadAlbums');
+const mockedUseLoadAlbum = vi.mocked(useLoadAlbum);
 
 describe('ProductPage', () => {
   it('renders nav link leading to homepage', () => {
-    useLoadAlbum.mockReturnValue({
+    mockedUseLoadAlbum.mockReturnValue({
       albumData: null,
       error: null,
       loading: false,
@@ -20,7 +21,7 @@ describe('ProductPage', () => {
   });
 
   it('renders loading state', () => {
-    useLoadAlbum.mockReturnValue({
+    mockedUseLoadAlbum.mockReturnValue({
       albumData: null,
       error: null,
       loading: true,
@@ -33,9 +34,9 @@ describe('ProductPage', () => {
   });
 
   it('renders error message', () => {
-    useLoadAlbum.mockReturnValue({
+    mockedUseLoadAlbum.mockReturnValue({
       albumData: null,
-      error: { message: 'Failed to fetch' },
+      error: new Error('Failed to fetch'),
       loading: false,
     });
 
@@ -45,10 +46,11 @@ describe('ProductPage', () => {
   });
 
   it('renders product data', () => {
-    useLoadAlbum.mockReturnValue({
+    mockedUseLoadAlbum.mockReturnValue({
       loading: false,
       error: null,
       albumData: {
+        id: 209,
         title: 'Test Album',
         year: 2001,
         genres: ['Rock'],
@@ -74,10 +76,11 @@ describe('ProductPage', () => {
   });
 
   it('renders image gallery', () => {
-    useLoadAlbum.mockReturnValue({
+    mockedUseLoadAlbum.mockReturnValue({
       loading: false,
       error: null,
       albumData: {
+        id: 292,
         title: 'Test Album',
         year: 2001,
         genres: ['Rock'],
@@ -117,10 +120,11 @@ describe('ProductPage', () => {
   });
 
   it('renders Tracklist', () => {
-    useLoadAlbum.mockReturnValue({
+    mockedUseLoadAlbum.mockReturnValue({
       loading: false,
       error: null,
       albumData: {
+        id: 93,
         title: 'Test Album',
         year: 2001,
         genres: ['Rock'],
@@ -136,19 +140,16 @@ describe('ProductPage', () => {
         tracklist: [
           {
             position: 'A1',
-            type_: 'track',
             title: 'Blue Rondo A La Turk',
             duration: '',
           },
           {
             position: 'A2',
-            type_: 'track',
             title: 'Strange Meadow Lark',
             duration: '',
           },
           {
             position: 'A3',
-            type_: 'track',
             title: 'Take Five',
             duration: '',
           },

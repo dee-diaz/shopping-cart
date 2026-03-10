@@ -8,8 +8,9 @@ export interface Album {
   styles?: string[];
   year?: number;
   tracklist?: {
-    position: string;
-    duration: string;
+    title: string;
+    position?: string;
+    duration?: string;
   }[];
   artists: {
     name: string;

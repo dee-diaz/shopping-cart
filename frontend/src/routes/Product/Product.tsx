@@ -29,12 +29,12 @@ export default function ProductPage() {
           artist={albumData.artists[0].name}
           artistImg={albumData.artists[0].thumbnail_url}
           title={albumData.title}
-          year={albumData.year}
+          year={albumData.year!}
           genre={albumData.genres[0]}
-          subgenres={albumData.styles}
+          subgenres={albumData.styles!}
           lowestPrice={albumData.lowest_price}
         />
-        <Tracklist tracklist={albumData.tracklist} />
+        <Tracklist tracklist={albumData.tracklist!} />
       </article>
     );
   }

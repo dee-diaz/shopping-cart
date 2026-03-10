@@ -79,13 +79,13 @@ describe('HomePage', () => {
   });
 
   it('does not render card grid when error occurs', () => {
-    renderWithProviders(<HomePage />, { error: new Error('Failed') });
+    renderWithProviders(<HomePage />, { error: 'Failed' });
 
     expect(screen.queryByTestId('card-grid')).not.toBeInTheDocument();
   });
 
   it('renders error message on fetch failure', () => {
-    renderWithProviders(<HomePage />, { error: new Error('Failed to fetch') });
+    renderWithProviders(<HomePage />, { error: 'Failed to fetch' });
     const errorMessage = screen.getByRole('alert');
     expect(errorMessage).toBeInTheDocument();
     expect(errorMessage).toHaveTextContent('Failed to fetch');

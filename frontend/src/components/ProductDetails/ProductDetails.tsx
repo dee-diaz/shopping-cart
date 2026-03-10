@@ -8,7 +8,7 @@ import { getDisplayPrice } from '../../services/priceService';
 
 interface ProductDetailsProps {
   artist: string;
-  artistImg: string;
+  artistImg?: string;
   title: string;
   year: number;
   genre: string;

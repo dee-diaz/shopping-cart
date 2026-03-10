@@ -4,13 +4,17 @@ import ArtistHeader from './ArtistHeader';
 
 describe('ArtistHeader', () => {
   it('is present in the document', () => {
-    render(<ArtistHeader />);
+    render(
+      <ArtistHeader artistName="MF Doom" albumTitle="MM..Food" artistImg="" />,
+    );
     const artistHeader = screen.getByRole('banner');
     expect(artistHeader).toBeInTheDocument();
   });
 
   it('renders correct album info', () => {
-    render(<ArtistHeader artistName="MF Doom" albumTitle="MM..Food" />);
+    render(
+      <ArtistHeader artistName="MF Doom" albumTitle="MM..Food" artistImg="" />,
+    );
 
     const artistName = screen.getByText('MF Doom');
     const albumTitle = screen.getByRole('heading');

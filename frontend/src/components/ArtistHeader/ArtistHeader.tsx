@@ -1,7 +1,7 @@
 import styles from './ArtistHeader.module.css';
 
 interface ArtistHeaderProps {
-  artistImg: string;
+  artistImg?: string;
   artistName: string;
   albumTitle: string;
 }

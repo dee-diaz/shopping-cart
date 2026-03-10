@@ -6,7 +6,7 @@ describe('ProductMeta', () => {
   it('renders correct meta data', () => {
     render(
       <ProductMeta
-        year="2004"
+        year={2004}
         genre="Hip Hop"
         subgenres={['Boom Bap', 'Jazzy Hip-Hop', 'Conscious']}
       />,
@@ -20,7 +20,7 @@ describe('ProductMeta', () => {
   });
 
   it('renders with empty subgenres', () => {
-    render(<ProductMeta year="2004" genre="Hip Hop" subgenres={[]} />);
+    render(<ProductMeta year={2004} genre="Hip Hop" subgenres={[]} />);
     expect(screen.getByText('Release year:')).toBeInTheDocument();
   });
 });

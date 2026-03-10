@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import IconButton from './IconButton';
 
-const cartIcon = (
+const cartIcon: React.ReactNode = (
   <svg
     width="20"
     height="20"
@@ -21,14 +21,16 @@ const cartIcon = (
 
 describe('IconButton', () => {
   it('renders svg inside the button', () => {
-    render(<IconButton icon={cartIcon} />);
+    render(<IconButton icon={cartIcon} onClick={vi.fn()} ariaLabel="Test" />);
     const iconButton = screen.getByRole('button');
     expect(iconButton).toBeInTheDocument();
     expect(iconButton.querySelector('svg')).toBeInTheDocument();
   });
 
   it('has accessible label', () => {
-    render(<IconButton icon={cartIcon} ariaLabel="Add to cart" />);
+    render(
+      <IconButton icon={cartIcon} onClick={vi.fn()} ariaLabel="Add to cart" />,
+    );
     expect(
       screen.getByRole('button', { name: /add to cart/i }),
     ).toBeInTheDocument();

@@ -5,7 +5,7 @@ import EmptyState from './EmptyState';
 
 describe('EmptyState', () => {
   it('button links to homepage', () => {
-    render(<EmptyState />, {
+    render(<EmptyState text="Test" />, {
       wrapper: MemoryRouter,
     });
     const link = screen.getByRole('link', { name: /return/i });

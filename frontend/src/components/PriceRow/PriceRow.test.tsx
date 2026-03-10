@@ -4,7 +4,7 @@ import PriceRow from './PriceRow';
 
 describe('PriceRow', () => {
   it('is present in the document', () => {
-    render(<PriceRow />);
+    render(<PriceRow price='$29' />);
     const priceRow = screen.getByTestId('price-row');
     expect(priceRow).toBeInTheDocument();
   });
@@ -15,7 +15,7 @@ describe('PriceRow', () => {
   });
 
   it('renders the stock badge', () => {
-    render(<PriceRow />);
+    render(<PriceRow price='$29' />);
     expect(
       screen.getByLabelText(/availability: in stock/i),
     ).toBeInTheDocument();

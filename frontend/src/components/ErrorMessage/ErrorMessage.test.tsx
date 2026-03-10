@@ -4,13 +4,13 @@ import ErrorMessage from './ErrorMessage';
 
 describe('ErrorMessage', () => {
   it('is present in the document', () => {
-    render(<ErrorMessage />);
+    render(<ErrorMessage message='Test' />);
     const errorMessage = screen.getByRole('alert');
     expect(errorMessage).toBeInTheDocument();
   });
 
   it('renders heading', () => {
-    render(<ErrorMessage />);
+    render(<ErrorMessage message='Test' />);
     const heading = screen.getByRole('heading', { name: /Whoops/i });
     expect(heading).toBeInTheDocument();
   });
