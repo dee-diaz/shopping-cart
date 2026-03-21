@@ -90,14 +90,14 @@ export function PriceFilter({ appliedValue, onApply }: PriceFilterProps) {
       <div className={styles.priceInputs}>
         <input
           type="number"
-          placeholder="min"
+          placeholder="$ min"
           aria-label="Minimum price"
           value={draftMin}
           onChange={(e) => setDraftMin(e.target.value)}
         />
         <input
           type="number"
-          placeholder="max"
+          placeholder="$ max"
           aria-label="Maximum price"
           value={draftMax}
           onChange={(e) => setDraftMax(e.target.value)}
